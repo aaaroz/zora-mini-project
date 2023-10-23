@@ -3,10 +3,9 @@ import LandingPage from "../pages/landing.page";
 import Signin from "../pages/login";
 import Signup from "../pages/signup";
 import Dashboard from "../pages/dashboard";
-import Sidebar from "../components/deskboard/sidebar";
 import NotFound from "../pages/not.found";
+import PrivateRoute from "./private.route";
 
-import { DrawerWithNav } from "../components/deskboard/drawer.nav";
 import { Route, Routes } from "react-router-dom";
 
 export default function Routers() {
@@ -15,9 +14,9 @@ export default function Routers() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/drawer" element={<DrawerWithNav />} />
-      <Route path="/sidebar" element={<Sidebar />} />
+      <Route path="/" element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

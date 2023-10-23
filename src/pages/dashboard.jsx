@@ -77,12 +77,8 @@ export default function Dashboard() {
                   666
                 </p>
                 <p className="flex items-center mt-3 text-green-500 font-semibold text-sm">
-                  <span className="text-xl">
-                    <BiUpArrowAlt />
-                  </span>
-                  +6.8%
                   <span className="text-gray-500 ms-2 font-medium text-xs">
-                    Since last month
+                    All of your products that u post
                   </span>
                 </p>
               </div>

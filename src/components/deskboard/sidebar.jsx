@@ -5,6 +5,7 @@ import { HiShoppingCart } from "react-icons/hi";
 import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
+import { authService } from "../../configs/auth";
 
 export default function Sidebar({ isActive }) {
   return (
@@ -110,6 +111,7 @@ export default function Sidebar({ isActive }) {
               <a
                 href="/#"
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                onClick={() => authService.logOut()}
               >
                 <span className="text-2xl block float-left">
                   <BiLogOut />
