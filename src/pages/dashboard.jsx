@@ -30,10 +30,10 @@ export default function Dashboard() {
         <div className="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
           <div className="grid grid-cols-1 gap-2 gap-y-9 place-items-center sm:grid-cols-2 md:grid-cols-3">
             <div className="flex">
-              <img src={totalSales} alt="sales" />
+              <img src={totalSales} alt="sales" className="w-12 md:w-auto" />
               <div className="block ms-2">
                 <span className="m-0">Total Sales</span>
-                <p className="text-2xl font-semibold m-0 mt-1 leading-3">
+                <p className="text-xl md:text-2xl font-semibold m-0 mt-1 leading-3">
                   $65.556
                 </p>
                 <p className="flex items-center mt-3 text-green-500 font-semibold text-sm">
@@ -48,10 +48,12 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex">
-              <img src={totalOrders} alt="order" />
+              <img src={totalOrders} alt="order" className="w-12 md:w-auto" />
               <div className="block ms-2">
                 <span className="m-0">Total Orders</span>
-                <p className="text-2xl font-semibold m-0 mt-1 leading-3">555</p>
+                <p className="text-xl md:text-2xl font-semibold m-0 mt-1 leading-3">
+                  555
+                </p>
                 <p className="flex items-center mt-3 text-red-500 font-semibold text-sm">
                   <span className="text-xl">
                     <BiDownArrowAlt />
@@ -64,10 +66,16 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex">
-              <img src={totalProducts} alt="products" />
+              <img
+                src={totalProducts}
+                alt="products"
+                className="w-12 md:w-auto"
+              />
               <div className="block ms-2">
                 <span className="m-0">Total Products</span>
-                <p className="text-2xl font-semibold m-0 mt-1 leading-3">666</p>
+                <p className="text-xl md:text-2xl font-semibold m-0 mt-1 leading-3">
+                  666
+                </p>
                 <p className="flex items-center mt-3 text-green-500 font-semibold text-sm">
                   <span className="text-xl">
                     <BiUpArrowAlt />

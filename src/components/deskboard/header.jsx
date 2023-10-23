@@ -13,9 +13,7 @@ export default function Header() {
 
   return (
     <header
-      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:hover:bg-opacity-0 ${
-        open && "opacity-0"
-      }`}
+      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:hover:bg-opacity-0`}
     >
       <div className="flex justify-between px-5">
         <div className="flex">
