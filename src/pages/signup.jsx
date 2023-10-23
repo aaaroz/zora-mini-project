@@ -211,7 +211,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <ButtonSubmit teks={"Sign Up"} />
+              <ButtonSubmit text={"Sign Up"} />
             </div>
           </form>
 

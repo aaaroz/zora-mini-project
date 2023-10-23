@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "../components/deskboard/sidebar";
-import Header from "../components/deskboard/header";
+import Sidebar from "../components/dashboard/sidebar";
+import Header from "../components/dashboard/header";
 import totalSales from "../assets/total.sales.svg";
 import totalOrders from "../assets/total.orders.svg";
 import totalProducts from "../assets/total.products.svg";
@@ -9,7 +9,7 @@ import Chart from "react-apexcharts";
 
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
-import { DrawerWithNav } from "../components/deskboard/drawer.nav";
+import { DrawerWithNav } from "../components/dashboard/drawer.nav";
 import { BiDownArrowAlt, BiUpArrowAlt } from "react-icons/bi";
 import {
   barChartOptions,
@@ -27,7 +27,7 @@ export default function Dashboard() {
       <Sidebar isActive={isActive} />
       <Header />
       <section className="p-4 lg:ml-64">
-        <div className="p-4 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div className="p-4 border-gray-200 border-dashed rounded-lg ">
           <div className="grid grid-cols-1 gap-2 gap-y-9 place-items-center sm:grid-cols-2 md:grid-cols-3">
             <div className="flex">
               <img src={totalSales} alt="sales" className="w-12 md:w-auto" />

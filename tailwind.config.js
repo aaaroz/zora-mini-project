@@ -29,5 +29,5 @@ export default withMT({
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 });
