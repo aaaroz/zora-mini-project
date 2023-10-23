@@ -7,7 +7,7 @@ import {
   ListItem,
   ListItemPrefix,
 } from "@material-tailwind/react";
-import { HiMenuAlt2, HiShoppingCart } from "react-icons/hi";
+import { HiShoppingCart } from "react-icons/hi";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { BiLogOut, BiSolidShoppingBags } from "react-icons/bi";
@@ -26,7 +26,7 @@ export function DrawerWithNav({ isActive }) {
         <div className="bg-neutral-900 h-screen lg:hidden">
           <div className=" text-blue-gray-50 mb-2 ms-6 flex items-center justify-between p-4 pb-1 pr-0">
             <Typography variant="h3" color="white">
-              DESKBOARD
+              DASHBOARD
             </Typography>
             <IconButton variant="text" color="white" onClick={closeDrawer}>
               <svg

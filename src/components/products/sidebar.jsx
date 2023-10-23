@@ -12,7 +12,7 @@ export default function Sidebar({ isActive }) {
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
         <div className="pt-5 pb-11 border-b-2">
-          <h1 className="text-center font-semibold text-3xl">DESKBOARD</h1>
+          <h1 className="text-center font-semibold text-3xl">DASHBOARD</h1>
           <p className="text-sm text-center font-normal mt-2">
             Sales Management Dashboard
           </p>
@@ -22,11 +22,9 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href="/#"
+                href="/dashboard"
                 className={` text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3
-               hover:bg-neutral-950  rounded-lg ${
-                 isActive && "bg-neutral-950"
-               }`}
+               hover:bg-neutral-950  rounded-lg `}
               >
                 <span className="text-2xl block float-left">
                   <RiDashboardFill />
@@ -37,9 +35,11 @@ export default function Sidebar({ isActive }) {
 
             <li>
               <a
-                href="/#"
-                className=" text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
-               hover:bg-neutral-950 rounded-lg mt-1"
+                href="/products"
+                className={`${
+                  isActive && "bg-neutral-950"
+                } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+               hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
                   <BiSolidShoppingBags />
@@ -50,7 +50,7 @@ export default function Sidebar({ isActive }) {
 
             <li>
               <a
-                href="/#"
+                href="/orders"
                 className=" text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">
@@ -62,7 +62,7 @@ export default function Sidebar({ isActive }) {
 
             <li>
               <a
-                href="/#"
+                href="/chatbot"
                 className=" text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left pe-0">
@@ -73,7 +73,10 @@ export default function Sidebar({ isActive }) {
             </li>
 
             <li>
-              <a className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1">
+              <a
+                href="/admin"
+                className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+              >
                 <span className="text-2xl block float-left">
                   <IoPerson />
                 </span>
@@ -87,7 +90,7 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href="/#"
+                href="/profile"
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">
@@ -96,16 +99,11 @@ export default function Sidebar({ isActive }) {
                 <span className={`text-sm font-medium flex-1 `}>Profile</span>
               </a>
             </li>
-            <li>
-              <a
-                href="/#"
-                className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
-              >
-                <span className="text-2xl block float-left">
-                  <AiFillSetting />
-                </span>
-                <span className={`text-sm font-medium flex-1 `}>Settings</span>
-              </a>
+            <li className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1">
+              <span className="text-2xl block float-left">
+                <AiFillSetting />
+              </span>
+              <span className={`text-sm font-medium flex-1 `}>Settings</span>
             </li>
             <li>
               <a

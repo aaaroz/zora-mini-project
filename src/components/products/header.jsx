@@ -1,19 +1,19 @@
 import React from "react";
 import zoraBlack from "../../assets/zora.svg";
 import { FaSearch } from "react-icons/fa";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { navOpen } from "../../recoil";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 import { BiSolidCircle } from "react-icons/bi";
 
 export default function Header() {
-  const [open, setOpen] = useRecoilState(navOpen);
+  const setOpen = useSetRecoilState(navOpen);
   const openDrawer = () => setOpen(true);
 
   return (
     <header
-      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:hover:bg-opacity-0`}
+      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:static`}
     >
       <div className="flex justify-between px-5">
         <div className="flex">

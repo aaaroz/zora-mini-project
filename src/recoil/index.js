@@ -12,6 +12,11 @@ const sidebarIsActive = atom({
   default: true,
 });
 
+const displayName = atom({
+  key: "display-name",
+  default: null,
+});
+
 const products = selector({
   key: "products-data",
   get: async () => {
@@ -35,4 +40,4 @@ const products = selector({
   },
 });
 
-export { navOpen, sidebarIsActive, products };
+export { navOpen, sidebarIsActive, products, displayName };
