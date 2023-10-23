@@ -5,8 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchema } from "../schema/login.schema";
 import { AiOutlineGoogle } from "react-icons/ai";
 import ButtonSubmit from "../components/auth.page/button.submit";
+import { APIAuth } from "../apis/APIAuth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Signin() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,8 +20,26 @@ export default function Signin() {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const signIn = async ({ email, password }) => {
+    try {
+      await APIAuth.signInWithCredentials({ email, password });
+      toast.success("login successfully!");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Your Email or Password is Wrong!");
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await APIAuth.signInWithGoogleOAuth();
+      toast.success("login successfully!");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("login failed! google oAuth is not valid!");
+    }
   };
 
   return (
@@ -30,7 +53,7 @@ export default function Signin() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-6" onSubmit={handleSubmit(signIn)}>
             <div>
               <label
                 htmlFor="email"
@@ -90,7 +113,7 @@ export default function Signin() {
             <div>
               <button
                 type="button"
-                // onClick={signInWithGoogle}
+                onClick={signInWithGoogle}
                 className="flex w-full justify-center rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium leading-7 text-white shadow-sm hover:bg-neutral-950 focus-visible:outline 
             focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
               >

@@ -4,8 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { SignupSchema } from "../schema/signup.schema";
 import ButtonSubmit from "../components/auth.page/button.submit";
+import { APIAuth } from "../apis/APIAuth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,7 +20,10 @@ export default function Signup() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const name = data.firstName + data.lastName;
+    APIAuth.signUpWithEmailPassword(data.email, data.password, name);
+    toast.success("welcome new admin!, please login to access dashboard!");
+    navigate("/signin");
   };
 
   return (
@@ -184,7 +192,7 @@ export default function Signup() {
               <div className="mt-2">
                 <input
                   id="confirmPassword"
-                  type="confirmPassword"
+                  type="password"
                   {...register("confirmPassword")}
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${

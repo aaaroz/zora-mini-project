@@ -31,8 +31,8 @@ export default function Header() {
         </div>
         <div className="px-3 justify-center items-center hidden sm:flex sm:flex-col-reverse md:flex-col-reverse lg:flex-row">
           <div
-            className="flex items-center border border-neutral-900 rounded-md p-1 text-xl focus-within:ring-1 focus-within:ring-inset
-          focus-within:border-neutral-900 focus-within:ring-neutral-900 focus-within:text-xs"
+            className="flex items-center border border-neutral-900 rounded-md p-1 text-xl focus-within:ring-1
+            focus-within:border-neutral-900 focus-within:ring-neutral-900 focus-within:text-sm"
           >
             <span>
               <FaSearch />
@@ -40,7 +40,7 @@ export default function Header() {
             <input
               type="text"
               placeholder="Search..."
-              className="p-0 ps-2 border-0 ring-0 bg-transparent focus:ring-0 placeholder-neutral-600 text-sm"
+              className="p-0 ps-2 border-0 ring-0 focus:ring-0 focus:border-0 bg-transparent placeholder-neutral-600 text-sm"
             />
           </div>
           <div className="flex pt-3 sm:pb-2 sm:pt-0 lg:pt-0 items-center">

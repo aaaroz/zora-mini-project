@@ -22,14 +22,14 @@ export default function Footer() {
             <input
               type="email"
               placeholder="Email"
-              className="w-full border-b-2 border-blue-gray-50 text-blue-gray-50 border-x-0 border-t-0 bg-transparent ring-transparent focus:ring-0 focus:border-neutral-400"
+              className="w-full border-b-2 border-blue-gray-50 text-blue-gray-50 border-x-0 border-t-0 bg-transparent ring-transparent focus:ring-0 focus:ring-transparent focus:border-neutral-400"
             />
           </div>
           <div className="mb-6">
             <textarea
               type="textarea"
               placeholder="Write Something..."
-              className="w-full border-2 border-blue-gray-50 text-blue-gray-50 bg-transparent ring-transparent focus:ring-0 focus:border-neutral-400"
+              className="w-full border-2 border-blue-gray-50 text-blue-gray-50 bg-transparent ring-transparent focus:ring-0  focus:border-neutral-400"
             />
           </div>
           <div className=" justify-end">
