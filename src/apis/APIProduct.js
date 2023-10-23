@@ -42,6 +42,7 @@ export const APIProduct = {
     try {
       const docRef = await addDoc(collection(db, "products"), {
         ...product,
+        id: product.id,
         createdAt: serverTimestamp(),
       });
       return docRef;
