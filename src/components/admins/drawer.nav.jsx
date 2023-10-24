@@ -21,6 +21,7 @@ import { authService } from "../../configs/auth";
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
   const uid = useRecoilValue(userId);
+
   const closeDrawer = () => setOpen(false);
 
   return (
@@ -74,9 +75,7 @@ export function DrawerWithNav({ isActive }) {
 
             <Link to="/products">
               <div
-                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
-                  isActive && "bg-neutral-950"
-                }`}
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
               >
                 <ListItem>
                   <ListItemPrefix>
@@ -89,7 +88,9 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/orders">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -113,7 +114,11 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/admin">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
+                  isActive && "bg-neutral-950"
+                }`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">

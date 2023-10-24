@@ -8,6 +8,7 @@ import ButtonSubmit from "../components/auth.page/button.submit";
 import { APIAuth } from "../apis/APIAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ReactHelmet from "../components/react.helmet";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -44,6 +45,11 @@ export default function Signin() {
 
   return (
     <>
+      <ReactHelmet
+        page={"Sign in"}
+        descContent={"page sign in"}
+        keywordsContent={"sign in to zora ecommerce"}
+      />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={zoraIcon} alt="zora" />

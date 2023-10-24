@@ -6,8 +6,9 @@ import storage from "redux-persist/lib/storage";
 
 import products from "./get.products.slice";
 import product from "./get.product.slice";
+import user from "./get.user.slice";
 
-const rootReducer = combineReducers({ products, product });
+const rootReducer = combineReducers({ products, product, user });
 
 const persistConfig = { key: root, storage };
 

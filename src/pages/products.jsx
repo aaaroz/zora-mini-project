@@ -3,14 +3,21 @@ import { DrawerWithNav } from "../components/products/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
 import Sidebar from "../components/products/sidebar";
-import Header from "../components/products/header";
 import { Link } from "react-router-dom";
 import ListProducts from "../components/products/list.products";
+import Header from "../components/dashboard/header";
+import ReactHelmet from "../components/react.helmet";
 
 export default function Products() {
   const isActive = useRecoilValue(sidebarIsActive);
+
   return (
     <>
+      <ReactHelmet
+        page={"Products"}
+        descContent={"page product"}
+        keywordsContent={"product of zora ecommerce"}
+      />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
       <Header />
@@ -35,9 +42,8 @@ export default function Products() {
             </button>
           </Link>
         </div>
-        <div className="m-10">
-          <ListProducts />
-        </div>
+        <h1 className="ps-24 py-5 text-xl font-semibold">Products List</h1>
+        <ListProducts />
       </section>
     </>
   );

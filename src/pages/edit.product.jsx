@@ -1,16 +1,22 @@
 import React from "react";
 import Sidebar from "../components/products/sidebar";
-import Header from "../components/products/header";
+import Header from "../components/dashboard/header";
 import FormEditProduct from "../components/products/form.edit.products";
 import { sidebarIsActive } from "../recoil";
 import { DrawerWithNav } from "../components/products/drawer.nav";
 import { useRecoilValue } from "recoil";
+import ReactHelmet from "../components/react.helmet";
 
 export default function EditProduct() {
   const isActive = useRecoilValue(sidebarIsActive);
 
   return (
     <>
+      <ReactHelmet
+        page={"Edit Products"}
+        descContent={"page Edit product"}
+        keywordsContent={"Edit product of zora ecommerce"}
+      />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
       <Header />

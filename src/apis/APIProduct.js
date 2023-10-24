@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../configs/firebase";
@@ -40,11 +39,7 @@ export const APIProduct = {
 
   addProduct: async (product) => {
     try {
-      const docRef = await addDoc(collection(db, "products"), {
-        ...product,
-        id: product.id,
-        createdAt: serverTimestamp(),
-      });
+      const docRef = await addDoc(collection(db, "products"), product);
       return docRef;
     } catch (error) {
       alert("error adding document:", error);
@@ -55,7 +50,6 @@ export const APIProduct = {
 
   deleteProduct: async (id) => {
     try {
-      console.log(id);
       const docRef = doc(db, "products", id);
       await deleteDoc(docRef).then(() => {
         toast.warn("Data Deleted Successfuly!");

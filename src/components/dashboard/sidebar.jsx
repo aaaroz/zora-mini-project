@@ -6,8 +6,12 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
+import { userId } from "../../recoil";
+import { useRecoilValue } from "recoil";
 
 export default function Sidebar({ isActive }) {
+  const uid = useRecoilValue(userId);
+
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
@@ -68,7 +72,9 @@ export default function Sidebar({ isActive }) {
                 <span className="text-2xl block float-left pe-0">
                   <PiChatCenteredDotsFill />
                 </span>
-                <span className={`text-sm font-medium flex-1 `}>ChatbotAI</span>
+                <span className={`text-sm font-medium flex-1 `}>
+                  Chatbot AI
+                </span>
               </a>
             </li>
 
@@ -90,7 +96,7 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href="/profile"
+                href={`/profile/${uid}`}
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">
@@ -101,7 +107,7 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href="/settings"
+                href={`/settings/${uid}`}
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">
