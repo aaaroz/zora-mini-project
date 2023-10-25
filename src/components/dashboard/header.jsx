@@ -1,19 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import zoraBlack from "../../assets/zora.svg";
 import { FaSearch } from "react-icons/fa";
-import { useSetRecoilState } from "recoil";
-import { navOpen } from "../../recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { displayName, navOpen, userId, userImage } from "../../recoil";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 import { BiSolidCircle } from "react-icons/bi";
+import { authService } from "../../configs/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from "../../configs/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Header() {
   const setOpen = useSetRecoilState(navOpen);
+  const setUid = useSetRecoilState(userId);
+  const [imageUrl, setImageUrl] = useRecoilState(userImage);
+  const [name, setName] = useRecoilState(displayName);
+  const [user, loading] = useAuthState(auth);
   const openDrawer = () => setOpen(true);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const fetchUserName = async () => {
+      try {
+        if (authService.isAuthorized()) {
+          const q = query(
+            collection(db, "users"),
+            where("uid", "==", user?.uid)
+          );
+          const doc = await getDocs(q);
+          const data = doc.docs[0].data();
+          setUid(data.uid);
+          setName(data.name);
+          if (data.image) {
+            setImageUrl(data.image);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUserName();
+  }, [user]);
 
   return (
     <header
-      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:hover:bg-opacity-0`}
+      className={`lg:ml-64 p-4 py-5 pt-8 sticky z-1 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:static`}
     >
       <div className="flex justify-between px-5">
         <div className="flex">
@@ -26,7 +59,7 @@ export default function Header() {
           </button>
           <img src={zoraBlack} alt="logo" className="w-14 md:w-16 mx-8 " />
           <h3 className="px-5 py-1 border-l-4 border-neutral-900 text-sm md:text-xl font-semibold">
-            Welcome back, <span>John Doe</span> !
+            Welcome back, <span>{name}</span> !
           </h3>
         </div>
         <div className="px-3 justify-center items-center hidden sm:flex sm:flex-col-reverse md:flex-col-reverse lg:flex-row">
@@ -47,10 +80,21 @@ export default function Header() {
             <span className="text-2xl ps-4">
               <IoIosNotifications />
             </span>
-            <span className="text-3xl ps-4">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={name}
+                className="w-10 h-10 rounded-full object-cover object-center"
+              />
+            ) : (
+              <span className="text-3xl ps-4">
+                <BiSolidCircle />
+              </span>
+            )}
+            {/* <span className="text-3xl ps-4">
               <BiSolidCircle />
-            </span>
-            <h4 className="ps-2 text-md font-medium">John Doe</h4>
+            </span> */}
+            <h4 className="ps-2 text-md font-medium">{name}</h4>
           </div>
         </div>
       </div>

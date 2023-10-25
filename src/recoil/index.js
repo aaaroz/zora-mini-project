@@ -1,4 +1,12 @@
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { atom, selector } from "recoil";
 import { db } from "../configs/firebase";
 
@@ -17,11 +25,25 @@ const displayName = atom({
   default: null,
 });
 
+const userId = atom({
+  key: "user-id",
+  default: null,
+});
+
+const userImage = atom({
+  key: "user-image",
+  default: null,
+});
+
+const userData = atom({
+  key: "user-data",
+  default: null,
+});
+
 const products = selector({
   key: "products-data",
   get: async () => {
     let product = null;
-
     try {
       const productsRef = collection(db, "products");
       const result = await getDocs(
@@ -31,7 +53,7 @@ const products = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      const lastDoc = result.docs[result.docs.length - 1];
+      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -40,4 +62,33 @@ const products = selector({
   },
 });
 
-export { navOpen, sidebarIsActive, products, displayName };
+const usersAdmin = selector({
+  key: "users-admin",
+  get: async () => {
+    let userAdmin = null;
+    try {
+      const userRef = collection(db, "users");
+      const result = await getDocs(query(userRef, orderBy("createdAt", "asc")));
+      const user = result.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      userAdmin = user;
+    } catch (error) {
+      alert("API calls failed");
+      console.error(error);
+    }
+    return userAdmin;
+  },
+});
+
+export {
+  navOpen,
+  sidebarIsActive,
+  products,
+  displayName,
+  usersAdmin,
+  userId,
+  userData,
+  userImage,
+};

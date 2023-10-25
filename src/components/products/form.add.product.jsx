@@ -1,48 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRecoilState } from "recoil";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useRecoilValue } from "recoil";
+import { serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { APIProduct } from "../../apis/APIProduct";
-import { auth, db, imageDB } from "../../configs/firebase";
+import { auth, imageDB } from "../../configs/firebase";
 import { displayName } from "../../recoil";
-import { authService } from "../../configs/auth";
 import { ProductSchema } from "../../schema/product.schema";
 import ButtonSubmit from "../auth.page/button.submit";
 
 export default function FormAddProducts() {
   const [imageUrl, setImageUrl] = useState("");
-  const [name, setName] = useRecoilState(displayName);
-  const [user, loading] = useAuthState(auth);
+  const name = useRecoilValue(displayName);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (loading) return;
-
-    const fetchUserName = async () => {
-      try {
-        if (authService.isAuthorized()) {
-          const q = query(
-            collection(db, "users"),
-            where("uid", "==", user?.uid)
-          );
-          const doc = await getDocs(q);
-          const data = doc.docs[0].data();
-
-          setName(data.name);
-        }
-      } catch (err) {
-        console.error(err);
-        console.log("An error occured while fetching user data");
-      }
-    };
-    fetchUserName();
-  }, [user]);
 
   const {
     register,
@@ -61,7 +36,12 @@ export default function FormAddProducts() {
   };
 
   const onSubmit = (product) => {
-    const newData = { ...product, image: imageUrl, admin: name };
+    const newData = {
+      ...product,
+      image: imageUrl,
+      admin: name,
+      createdAt: serverTimestamp(),
+    };
     APIProduct.addProduct(newData).then(() => {
       toast.success("Product Added Successfully!");
       navigate("/products");
@@ -74,7 +54,7 @@ export default function FormAddProducts() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md justify-center">
           <div className="flex justify-between">
             <h2 className="block text-xl mb-1 font-bold leading-6 text-gray-900">
-              Detail Product
+              Create Product
             </h2>
             <Link to="/products">
               <button className="py-2 px-4 text-xs rounded-md text-white bg-neutral-900 hover:bg-neutral-950">

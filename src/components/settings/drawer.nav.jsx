@@ -74,9 +74,7 @@ export function DrawerWithNav({ isActive }) {
 
             <Link to="/products">
               <div
-                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
-                  isActive && "bg-neutral-950"
-                }`}
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
               >
                 <ListItem>
                   <ListItemPrefix>
@@ -89,7 +87,9 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/orders">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -101,7 +101,9 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/chatbot">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -129,7 +131,9 @@ export function DrawerWithNav({ isActive }) {
               <Typography variant="h6">HELP & SUPPORT</Typography>
             </div>
             <Link to={`/profile/${uid}`}>
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 `}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -140,8 +144,12 @@ export function DrawerWithNav({ isActive }) {
                 </ListItem>
               </div>
             </Link>
-            <Link to={`/settings`}>
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+            <Link to={`/profile/${uid}`}>
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
+                  isActive && "bg-neutral-950"
+                }`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">

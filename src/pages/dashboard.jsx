@@ -17,12 +17,18 @@ import {
   productSalesDognutChartOptions,
   productSalesDognutChartData,
 } from "../data";
+import ReactHelmet from "../components/react.helmet";
 
 export default function Dashboard() {
   const isActive = useRecoilValue(sidebarIsActive);
 
   return (
     <>
+      <ReactHelmet
+        page={"Dashboard"}
+        descContent={"page dashboard"}
+        keywordsContent={"dashboard of zora ecommerce"}
+      />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
       <Header />

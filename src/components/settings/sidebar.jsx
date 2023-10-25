@@ -6,12 +6,11 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
-import { userId } from "../../recoil";
 import { useRecoilValue } from "recoil";
+import { userId } from "../../recoil";
 
 export default function Sidebar({ isActive }) {
   const uid = useRecoilValue(userId);
-
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
@@ -40,9 +39,7 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href="/products"
-                className={`${
-                  isActive && "bg-neutral-950"
-                } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                className={`text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
                hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
@@ -55,7 +52,8 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href="/orders"
-                className=" text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                className={`text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                 hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
                   <HiShoppingCart />
@@ -97,7 +95,8 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href={`/profile/${uid}`}
-                className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                className={` text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                 hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
                   <IoPersonCircleSharp />
@@ -107,8 +106,11 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href={`/settings`}
-                className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                href={`/profile/${uid}`}
+                className={`${
+                  isActive && "bg-neutral-950"
+                } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                   hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
                   <AiFillSetting />

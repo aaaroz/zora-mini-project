@@ -1,9 +1,10 @@
 import React from "react";
 import zoraIcons from "../assets/zora.svg";
+import ButtonSubmit from "../components/auth.page/button.submit";
+import ReactHelmet from "../components/react.helmet";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { SignupSchema } from "../schema/signup.schema";
-import ButtonSubmit from "../components/auth.page/button.submit";
 import { APIAuth } from "../apis/APIAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,11 @@ export default function Signup() {
 
   return (
     <>
+      <ReactHelmet
+        page={"Sign up"}
+        descContent={"page sign up"}
+        keywordsContent={"sign up to zora ecommerce"}
+      />
       <div className="flex flex-1 flex-col justify-center mt-20 px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={zoraIcons} alt="zora" />

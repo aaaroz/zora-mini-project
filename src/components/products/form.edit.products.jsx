@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ProductSchema } from "../../schema/product.schema";
-
 import {
   selectProduct,
   fetchGetProductById,
@@ -24,7 +23,6 @@ export default function FormEditProduct() {
   const {
     register,
     setValue,
-    resetField,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(ProductSchema) });
@@ -50,12 +48,10 @@ export default function FormEditProduct() {
 
   const handleImage = (e) => {
     const image = e.target.files[0];
-    const images = ref(imageDB, `Images/${v4()}`);
+    const images = ref(imageDB, `newImages/${v4()}`);
     uploadBytes(images, image).then((data) => {
-      console.log(data, "images");
       getDownloadURL(data.ref).then((val) => {
         setImageUrl(val);
-        console.log(val);
       });
     });
   };
@@ -66,13 +62,6 @@ export default function FormEditProduct() {
       const newData = { ...product, image: imageUrl };
       APIProduct.updateProduct(id, newData).then(() => {
         toast.success("Data has been updated!");
-        resetField("amount");
-        resetField("category");
-        resetField("description");
-        resetField("image");
-        resetField("price");
-        resetField("title");
-        resetField("size");
         navigate("/products");
       });
     } else {
@@ -82,13 +71,6 @@ export default function FormEditProduct() {
       const newData = { ...product, image: image };
       APIProduct.updateProduct(id, newData).then(() => {
         toast.success("Data has been updated!");
-        resetField("amount");
-        resetField("category");
-        resetField("description");
-        resetField("image");
-        resetField("price");
-        resetField("title");
-        resetField("size");
         navigate("/products");
       });
     }
@@ -99,7 +81,7 @@ export default function FormEditProduct() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md justify-center">
           <div className="flex justify-between">
             <h2 className="block text-xl mb-1 font-bold leading-6 text-gray-900">
-              Detail Product
+              Update Product
             </h2>
             <Link to="/products">
               <button className="py-2 px-4 text-xs rounded-md text-white bg-neutral-900 hover:bg-neutral-950">
@@ -120,8 +102,8 @@ export default function FormEditProduct() {
                 type="text"
                 {...register("id")}
                 className="block w-full rounded-md border-0 py-1 px-2 
-                 text-gray-900 shadow-sm ring-1 ring-inset ring-slate-300 disabled:bg-slate-300 placeholder:text-gray-400 
-                 focus:ring-1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6"
+                 text-gray-900 shadow-sm ring-1 ring-inset ring-neutral-300 placeholder:text-gray-400 
+                 focus:ring-1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6 disabled:bg-neutral-300"
                 disabled
               />
             </div>
@@ -227,29 +209,27 @@ export default function FormEditProduct() {
               )}
             </div>
             <div className="mb-3">
-              <label
-                htmlFor="size"
-                className="mb-1 block text-sm font-medium leading-6 text-gray-900"
-              >
-                Product Size
-              </label>
               <div className="flex flex-row">
-                <p className="mb-1 text-sm font-normal text-slate-400 ">
+                <p className="mb-1 text-xs font-normal text-blue-gray-400 ">
                   Current Available Size :
                 </p>
                 {product.data.size &&
                   product.data.size.map((val, index) => (
-                    <div>
-                      <div
-                        className="text-sm font-normal text-slate-400 "
-                        key={index + 1}
-                      >
+                    <div key={index + 1}>
+                      <div className="text-xs font-normal text-blue-gray-400 ">
                         <span className="text-white">-</span>
                         {val}
                       </div>
                     </div>
                   ))}
               </div>
+              <label
+                htmlFor="size"
+                className="mb-1 block text-sm font-medium leading-6 text-gray-900"
+              >
+                Available Product Size
+              </label>
+
               <div className="flex items-center mb-1">
                 <input
                   type="checkbox"

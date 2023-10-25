@@ -42,6 +42,7 @@ export const APIAuth = {
           name: user.displayName,
           authProvider: "google",
           email: user.email,
+          photoUrl: user.photoURL,
           createdAt: serverTimestamp(),
         });
       }

@@ -13,11 +13,14 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { BiLogOut, BiSolidShoppingBags } from "react-icons/bi";
 import { RiDashboardFill } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
-import { useRecoilState } from "recoil";
-import { navOpen } from "../../recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { navOpen, userId } from "../../recoil";
+import { Link } from "react-router-dom";
+import { authService } from "../../configs/auth";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
+  const uid = useRecoilValue(userId);
   const closeDrawer = () => setOpen(false);
 
   return (
@@ -53,93 +56,115 @@ export function DrawerWithNav({ isActive }) {
           <div className="ps-5 pt-7 pb-2 text-blue-gray-50">
             <Typography variant="h6">MAIN MENU</Typography>
           </div>
-          <List>
-            <div
-              className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
-                isActive && "bg-neutral-950"
-              }`}
-            >
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <RiDashboardFill />
-                  </span>
-                </ListItemPrefix>
-                Dashboard
-              </ListItem>
-            </div>
 
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <BiSolidShoppingBags />
-                  </span>
-                </ListItemPrefix>
-                Products
-              </ListItem>
-            </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <HiShoppingCart />
-                  </span>
-                </ListItemPrefix>
-                Orders
-              </ListItem>
-            </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <PiChatCenteredDotsFill />
-                  </span>
-                </ListItemPrefix>
-                Chatbot AI
-              </ListItem>
-            </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <IoPerson />
-                  </span>
-                </ListItemPrefix>
-                Administrators
-              </ListItem>
-            </div>
+          <List>
+            <Link to="/dashboard">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
+                  isActive && "bg-neutral-950"
+                }`}
+              >
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <RiDashboardFill />
+                    </span>
+                  </ListItemPrefix>
+                  Dashboard
+                </ListItem>
+              </div>
+            </Link>
+
+            <Link to="/products">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <BiSolidShoppingBags />
+                    </span>
+                  </ListItemPrefix>
+                  Products
+                </ListItem>
+              </div>
+            </Link>
+            <Link to="/orders">
+              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <HiShoppingCart />
+                    </span>
+                  </ListItemPrefix>
+                  Orders
+                </ListItem>
+              </div>
+            </Link>
+            <Link to="/chatbot">
+              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <PiChatCenteredDotsFill />
+                    </span>
+                  </ListItemPrefix>
+                  Chatbot AI
+                </ListItem>
+              </div>
+            </Link>
+            <Link to="/admin">
+              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <IoPerson />
+                    </span>
+                  </ListItemPrefix>
+                  Administrators
+                </ListItem>
+              </div>
+            </Link>
+
             <div className="ps-5 pt-7 pb-2 text-blue-gray-50">
               <Typography variant="h6">HELP & SUPPORT</Typography>
             </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <IoPersonCircleSharp />
-                  </span>
-                </ListItemPrefix>
-                Profile
-              </ListItem>
-            </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <AiFillSetting />
-                  </span>
-                </ListItemPrefix>
-                Tables
-              </ListItem>
-            </div>
-            <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+            <Link to={`/profile/${uid}`}>
+              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <IoPersonCircleSharp />
+                    </span>
+                  </ListItemPrefix>
+                  Profile
+                </ListItem>
+              </div>
+            </Link>
+            <Link to={`/settings`}>
+              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <AiFillSetting />
+                    </span>
+                  </ListItemPrefix>
+                  Settings
+                </ListItem>
+              </div>
+            </Link>
+
+            <div
+              className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
+              onClick={() => authService.logOut()}
+            >
               <ListItem>
                 <ListItemPrefix>
                   <span className="text-xl">
                     <BiLogOut />
                   </span>
                 </ListItemPrefix>
-                Administrators
+                Logout
               </ListItem>
             </div>
           </List>

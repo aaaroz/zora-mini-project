@@ -7,10 +7,12 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import ButtonSubmit from "../components/auth.page/button.submit";
 import { APIAuth } from "../apis/APIAuth";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ReactHelmet from "../components/react.helmet";
 
 export default function Signin() {
   const navigate = useNavigate();
+  const { search } = useLocation();
 
   const {
     register,
@@ -23,10 +25,21 @@ export default function Signin() {
   const signIn = async ({ email, password }) => {
     try {
       await APIAuth.signInWithCredentials({ email, password });
-      toast.success("login successfully!");
-      navigate("/");
+
+      let returnTo = "/";
+      const params = new URLSearchParams(search);
+      const redirectTo = params.get("return_to");
+      if (redirectTo) {
+        returnTo += redirectTo;
+        toast.success("login successfully!");
+        return navigate(returnTo);
+      } else {
+        toast.success("login successfully!");
+        return navigate(returnTo);
+      }
+      // navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Your Email or Password is Wrong!");
     }
   };
@@ -34,16 +47,32 @@ export default function Signin() {
   const signInWithGoogle = async () => {
     try {
       await APIAuth.signInWithGoogleOAuth();
-      toast.success("login successfully!");
-      navigate("/");
+      let returnTo = "/";
+      const params = new URLSearchParams(search);
+      const redirectTo = params.get("return_to");
+      if (redirectTo) {
+        returnTo += redirectTo;
+        toast.success("login successfully!");
+        return navigate(returnTo);
+      } else {
+        toast.success("login successfully!");
+        return navigate(returnTo);
+      }
+      // toast.success("login successfully!");
+      // navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("login failed! google oAuth is not valid!");
     }
   };
 
   return (
     <>
+      <ReactHelmet
+        page={"Sign in"}
+        descContent={"page sign in"}
+        keywordsContent={"sign in to zora ecommerce"}
+      />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={zoraIcon} alt="zora" />
