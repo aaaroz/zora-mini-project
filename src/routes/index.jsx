@@ -31,7 +31,7 @@ export default function Routers() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/admin" element={<Admins />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/settings/:id" element={<Settings />} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>

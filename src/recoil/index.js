@@ -30,6 +30,11 @@ const userId = atom({
   default: null,
 });
 
+const userImage = atom({
+  key: "user-image",
+  default: null,
+});
+
 const userData = atom({
   key: "user-data",
   default: null,
@@ -62,12 +67,12 @@ const usersAdmin = selector({
   get: async () => {
     let userAdmin = null;
     try {
-      const result = await getDocs(collection(db, "users"));
+      const userRef = collection(db, "users");
+      const result = await getDocs(query(userRef, orderBy("createdAt", "asc")));
       const user = result.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      console.log(user);
       userAdmin = user;
     } catch (error) {
       alert("API calls failed");
@@ -85,4 +90,5 @@ export {
   usersAdmin,
   userId,
   userData,
+  userImage,
 };

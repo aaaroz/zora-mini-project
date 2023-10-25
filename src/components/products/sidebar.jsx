@@ -107,7 +107,7 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href={`/settings/${uid}`}
+                href={`/settings`}
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">

@@ -5,20 +5,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserSchema } from "../../schema/user.schema";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUserById, selectUser } from "../../store/get.user.slice";
-import { imageDB } from "../../configs/firebase";
+import { auth, imageDB } from "../../configs/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { APIUser } from "../../apis/APIUser";
 import { v4 } from "uuid";
 import ButtonSubmit from "../auth.page/button.submit";
 import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function FormEditProfile() {
   const [imageUrl, setImageUrl] = useState("");
   const [data, setData] = useState(null);
+  const [user, loading] = useAuthState(auth);
+  const stateUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const stateUser = useSelector(selectUser);
 
   const {
     register,
@@ -28,60 +29,73 @@ export default function FormEditProfile() {
   } = useForm({ resolver: yupResolver(UserSchema) });
 
   useEffect(() => {
-    dispatch(fetchGetUserById(id));
-    stateUser?.data?.map((data) => {
-      setData(data);
-    });
-    console.log(data);
-  }, [dispatch, id]);
+    if (loading) return;
+    const timer = setTimeout(() => {
+      dispatch(fetchGetUserById(user?.uid));
+      stateUser?.data?.map((data) => {
+        setData(data);
+      });
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (data) {
       setValue("id", `${data.id}`);
-      setValue("uid", `${id}`);
+      setValue("uid", `${user?.uid}`);
       setValue("name", `${data.name}`);
       setValue("email", `${data.email}`);
+    } else if (data?.image) {
+      setValue("id", `${data.id}`);
+      setValue("uid", `${user?.uid}`);
+      setValue("name", `${data.name}`);
+      setValue("email", `${data.email}`);
+      setValue("image", `${data.image}`);
     }
-  }, [data, setValue, id]);
+  }, [data, setValue, user]);
 
   const handleImage = (e) => {
     const image = e.target.files[0];
     const images = ref(imageDB, `ProfilePictures/${v4()}`);
     uploadBytes(images, image).then((data) => {
-      console.log(data, "images");
       getDownloadURL(data.ref).then((val) => {
         setImageUrl(val);
-        console.log(val);
       });
     });
   };
 
   const onSubmit = (user) => {
-    console.log({ ...user, image: imageUrl });
     if (user.image.length === 1) {
       const id = user.id;
       const newData = { ...user, image: imageUrl };
       APIUser.updateUser(id, newData).then(() => {
         toast.success("Data has been updated!");
-        navigate(0);
+        navigate(`/profile/${user.uid}`);
       });
-    } else {
-      console.log(user);
+    } else if (user.image.length === 0) {
       const image = null;
       const id = user.id;
       const newData = { ...user, image: image };
       APIUser.updateUser(id, newData).then(() => {
         toast.success("Data has been updated!");
-        navigate(0);
+        navigate(`/profile/${user.uid}`);
+      });
+    } else {
+      const image = data?.image;
+      const id = user.id;
+      const newData = { ...user, image: image };
+      APIUser.updateUser(id, newData).then(() => {
+        toast.success("Data has been updated!");
+        navigate(`/profile/${user.uid}`);
       });
     }
   };
 
   return (
     <section>
-      <h2 className="block text-xl mb-1 font-bold leading-6 text-gray-900">
-        Update Profile
-      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 gap-5 place-items-center md:grid-cols-2">
           <div className="w-full p-5">
@@ -152,8 +166,7 @@ export default function FormEditProfile() {
               />
             </div>
           </div>
-
-          <div className="bg-amber-600">
+          <div className="flex flex-col gap-5 justify-center items-center text-left">
             <label
               htmlFor="image"
               className="mb-1 block text-sm font-medium leading-6 text-gray-900"

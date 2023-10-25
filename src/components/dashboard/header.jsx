@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import zoraBlack from "../../assets/zora.svg";
 import { FaSearch } from "react-icons/fa";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { displayName, navOpen, userId } from "../../recoil";
+import { displayName, navOpen, userId, userImage } from "../../recoil";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 import { BiSolidCircle } from "react-icons/bi";
@@ -14,6 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export default function Header() {
   const setOpen = useSetRecoilState(navOpen);
   const setUid = useSetRecoilState(userId);
+  const [imageUrl, setImageUrl] = useRecoilState(userImage);
   const [name, setName] = useRecoilState(displayName);
   const [user, loading] = useAuthState(auth);
   const openDrawer = () => setOpen(true);
@@ -32,6 +33,9 @@ export default function Header() {
           const data = doc.docs[0].data();
           setUid(data.uid);
           setName(data.name);
+          if (data.image) {
+            setImageUrl(data.image);
+          }
         }
       } catch (err) {
         console.error(err);
@@ -76,13 +80,20 @@ export default function Header() {
             <span className="text-2xl ps-4">
               <IoIosNotifications />
             </span>
-            {user?.photoURL ? (
-              <img src={user?.photoURL} alt={name} className="w-10" />
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={name}
+                className="w-10 h-10 rounded-full object-cover object-center"
+              />
             ) : (
               <span className="text-3xl ps-4">
                 <BiSolidCircle />
               </span>
             )}
+            {/* <span className="text-3xl ps-4">
+              <BiSolidCircle />
+            </span> */}
             <h4 className="ps-2 text-md font-medium">{name}</h4>
           </div>
         </div>

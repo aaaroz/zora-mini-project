@@ -43,7 +43,7 @@ export class AuthService {
     try {
       await signOut(auth);
       this.clearCredentialsFromCookie();
-      window.location.href = "/logoutsession";
+      window.location.href = "/";
     } catch (err) {
       console.error(err);
     }

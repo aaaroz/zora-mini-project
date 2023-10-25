@@ -145,7 +145,7 @@ export function DrawerWithNav({ isActive }) {
                 </ListItem>
               </div>
             </Link>
-            <Link to={`/settings/${uid}`}>
+            <Link to={`/settings`}>
               <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
                 <ListItem>
                   <ListItemPrefix>

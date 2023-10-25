@@ -51,9 +51,8 @@ export const APIProduct = {
   deleteProduct: async (id) => {
     try {
       const docRef = doc(db, "products", id);
-      await deleteDoc(docRef).then(() => {
-        toast.warn("Data Deleted Successfuly!");
-      });
+      await deleteDoc(docRef);
+      toast.warn("Data Deleted Successfuly!");
     } catch (error) {
       alert("error delete document:", error);
       console.error(error);

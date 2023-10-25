@@ -26,7 +26,6 @@ export const APIUser = {
 
   updateUser: async (id, data) => {
     try {
-      console.log(id);
       const docRef = doc(db, "users", id);
       await updateDoc(docRef, data);
     } catch (error) {

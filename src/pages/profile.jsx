@@ -6,11 +6,13 @@ import Header from "../components/dashboard/header";
 import { DrawerWithNav } from "../components/profile/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { auth } from "../configs/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUserById, selectUser } from "../store/get.user.slice";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Spinner } from "@material-tailwind/react";
+import SkeletonProfile from "../components/profile/skeleton.profile";
 
 export default function Profile() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -24,7 +26,6 @@ export default function Profile() {
     if (loading) return;
     if (user) return;
   }, [dispatch, id, loading, user]);
-  console.log(stateUser?.data);
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function Profile() {
       <Header />
       <section className="p-24 lg:ml-64">
         <div className="rounded-md shadow-md border bg-neutral-100">
-          {stateUser.status === "loading" && <p>Loading..</p>}
+          {stateUser.status === "loading" && <SkeletonProfile />}
           {stateUser.status === "success" &&
             stateUser.data.map((data, index) => (
               <div
@@ -67,33 +68,26 @@ export default function Profile() {
                   </h4>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  {data?.image && (
-                    <div className="w-24 border-2 rounded-md border-neutral-900 bg-neutral-900 ">
-                      <img src={data.image} alt="profile" />
-                    </div>
-                  )}
-                  {data?.photoUrl ? (
-                    <div
-                      className={`w-24 border-2 rounded-md border-neutral-900 bg-neutral-900 ${
-                        data.image && "hidden"
-                      }`}
-                    >
-                      <img src={data.photoUrl} alt="blank" />
+                  {data?.image ? (
+                    <div className="w-24 h-[6.3rem] border-2 rounded-md border-neutral-900 bg-neutral-900 ">
+                      <img
+                        src={data.image}
+                        alt="profile"
+                        className="w-24 h-24 object-cover object-center rounded-md"
+                      />
                     </div>
                   ) : (
                     <div
-                      className={`w-24 border-2 rounded-md border-neutral-900 bg-neutral-900 ${
-                        data.image && "hidden"
-                      }`}
+                      className={`w-24 border-2 rounded-md border-neutral-900 bg-neutral-900`}
                     >
                       <img src={blankProfile} alt="blank" />
                     </div>
                   )}
-                  {user?.uid === id && (
+                  <Link to="/settings">
                     <button className="mt-2 px-4 py-1 text-sm rounded-md text-white bg-neutral-900 hover:bg-neutral-950">
                       Change Profile Photo
                     </button>
-                  )}
+                  </Link>
                 </div>
               </div>
             ))}

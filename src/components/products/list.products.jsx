@@ -36,7 +36,7 @@ export default function ListProducts() {
         {products.status === "success" &&
           products.data.map((product, index) => (
             <div
-              className="w-52 bg-slate-50 rounded-lg shadow border border-slate-900"
+              className="w-52 bg-neutral-50 rounded-lg shadow border border-slate-900"
               key={index}
             >
               <img

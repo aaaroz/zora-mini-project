@@ -1,12 +1,21 @@
 import React from "react";
-import Signin from "../pages/login";
 
 import { authService } from "../configs/auth";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function PrivateRoute() {
+  const location = useLocation();
+  const { pathname } = location;
+
+  let path = "/signin";
+
+  if (pathname !== "/") {
+    path += `?return_to=${pathname.slice(1, pathname.length)}`;
+  }
+
   if (authService.isAuthorized()) {
     return <Outlet />;
   }
-  return <Signin />;
+
+  return <Navigate to={path} />;
 }
