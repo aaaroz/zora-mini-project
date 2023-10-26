@@ -31,7 +31,6 @@ export default function HeaderDashboard() {
     setName(stateUser?.data[0].name);
     setUid(stateUser?.data[0].uid);
   }, [dispatch]);
-  console.log(stateUser?.data[0].uid);
   return (
     <header
       className={`lg:ml-64 p-4 py-5 pt-8 sticky z-10 top-0 left-0 hover:bg-black hover:bg-opacity-40 lg:hover:bg-transparent lg:static`}

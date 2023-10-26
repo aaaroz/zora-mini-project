@@ -13,8 +13,8 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { BiLogOut, BiSolidShoppingBags } from "react-icons/bi";
 import { RiDashboardFill } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { navOpen, userId } from "../../recoil";
+import { useRecoilState } from "recoil";
+import { navOpen } from "../../recoil";
 import { Link } from "react-router-dom";
 import { authService } from "../../configs/auth";
 import { useSelector } from "react-redux";
@@ -22,7 +22,6 @@ import { selectUser } from "../../store/get.user.slice";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
-  // const uid = useRecoilValue(userId);
   const stateUser = useSelector(selectUser);
   const { uid } = stateUser.data[0];
   const closeDrawer = () => setOpen(false);
