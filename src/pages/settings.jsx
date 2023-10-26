@@ -20,7 +20,7 @@ export default function Settings() {
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
       <HeaderDashboard />
-      <section className="px-24 py-14 lg:ml-64">
+      <section className="lg:px-24 py-14 lg:ml-64">
         <div className="border-1 rounded-lg border px-10">
           <h2 className="block text-xl ms-6 my-2 font-bold leading-6 text-gray-900">
             Profile Settings
