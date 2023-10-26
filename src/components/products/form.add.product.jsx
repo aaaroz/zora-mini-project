@@ -10,11 +10,16 @@ import { displayName } from "../../recoil";
 import { ProductSchema } from "../../schema/product.schema";
 import ButtonSubmit from "../auth.page/button.submit";
 import { uploadProduct } from "../../utils/upload.product";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/get.user.slice";
 
 export default function FormAddProducts() {
-  const name = useRecoilValue(displayName);
-  const navigate = useNavigate();
+  // const name = useRecoilValue(displayName);
 
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const { name } = user?.data[0];
+  console.log(name);
   const {
     register,
     handleSubmit,
@@ -22,6 +27,7 @@ export default function FormAddProducts() {
   } = useForm({ resolver: yupResolver(ProductSchema) });
 
   const onSubmit = async (product) => {
+    console.log(product.image[0]);
     const imageURL = await uploadProduct(product.image[0]);
     const newData = {
       ...product,
