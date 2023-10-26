@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAXC7XeTdEssYSIWhVtL0yPxP2_dhQIGPo",
-  authDomain: "zora-ecommerce-a8053.firebaseapp.com",
-  projectId: "zora-ecommerce-a8053",
-  storageBucket: "zora-ecommerce-a8053.appspot.com",
-  messagingSenderId: "214048429856",
-  appId: "1:214048429856:web:b7855090d6836b540ce945",
+  apiKey: process.env.VITE_APP_API_KEY,
+  authDomain: process.env.VITE_APP_AUTH_DOMAIN,
+  projectId: process.env.VITE_APP_PROJECT_ID,
+  storageBucket: process.env.VITE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VITE_APP_APP_ID,
 };
 
 export const app = initializeApp(firebaseConfig);

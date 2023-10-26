@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import ButtonSubmit from "../auth.page/button.submit";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserSchema } from "../../schema/user.schema";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchGetUserById, selectUser } from "../../store/get.user.slice";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/get.user.slice";
 import { auth, imageDB } from "../../configs/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 import { APIUser } from "../../apis/APIUser";
-import { v4 } from "uuid";
-import ButtonSubmit from "../auth.page/button.submit";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { uploadPhoto } from "../../utils/upload.photo";
+import { IoPerson } from "react-icons/io5";
 
 export default function FormEditProfile() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [data, setData] = useState(null);
   const [user, loading] = useAuthState(auth);
   const stateUser = useSelector(selectUser);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -30,61 +28,42 @@ export default function FormEditProfile() {
 
   useEffect(() => {
     if (loading) return;
-    const timer = setTimeout(() => {
-      dispatch(fetchGetUserById(user?.uid));
-      stateUser?.data?.map((data) => {
-        setData(data);
-      });
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [dispatch, user]);
+  }, []);
 
   useEffect(() => {
-    if (data) {
-      setValue("id", `${data.id}`);
-      setValue("uid", `${user?.uid}`);
-      setValue("name", `${data.name}`);
-      setValue("email", `${data.email}`);
-    } else if (data?.image) {
-      setValue("id", `${data.id}`);
-      setValue("uid", `${user?.uid}`);
-      setValue("name", `${data.name}`);
-      setValue("email", `${data.email}`);
-      setValue("image", `${data.image}`);
+    if (stateUser) {
+      stateUser.data.map((data) => {
+        setValue("id", `${data.id}`);
+        setValue("uid", `${user?.uid}`);
+        setValue("name", `${data.name}`);
+        setValue("email", `${data.email}`);
+      });
+    } else if (stateUser.data?.image) {
+      stateUser.data.map((data) => {
+        setValue("id", `${data.id}`);
+        setValue("uid", `${user?.uid}`);
+        setValue("name", `${data.name}`);
+        setValue("email", `${data.email}`);
+        setValue("image", `${data.image}`);
+      });
     }
-  }, [data, setValue, user]);
+  }, [setValue, user]);
 
-  const handleImage = (e) => {
-    const image = e.target.files[0];
-    const images = ref(imageDB, `ProfilePictures/${v4()}`);
-    uploadBytes(images, image).then((data) => {
-      getDownloadURL(data.ref).then((val) => {
-        setImageUrl(val);
-      });
-    });
-  };
-
-  const onSubmit = (user) => {
+  const onSubmit = async (user) => {
     if (user.image.length === 1) {
+      const photo = stateUser.data[0].image.split("%2F")[1].split("?")[0];
+      const imageRef = ref(imageDB, `photos/${photo}`);
+      deleteObject(imageRef);
+
+      const imageURL = await uploadPhoto(user.image[0]);
       const id = user.id;
-      const newData = { ...user, image: imageUrl };
-      APIUser.updateUser(id, newData).then(() => {
-        toast.success("Data has been updated!");
-        navigate(`/profile/${user.uid}`);
-      });
-    } else if (user.image.length === 0) {
-      const image = null;
-      const id = user.id;
-      const newData = { ...user, image: image };
+      const newData = { ...user, image: imageURL };
       APIUser.updateUser(id, newData).then(() => {
         toast.success("Data has been updated!");
         navigate(`/profile/${user.uid}`);
       });
     } else {
-      const image = data?.image;
+      const image = stateUser.data[0].image;
       const id = user.id;
       const newData = { ...user, image: image };
       APIUser.updateUser(id, newData).then(() => {
@@ -173,12 +152,21 @@ export default function FormEditProfile() {
             >
               Profile Picture
             </label>
-            {imageUrl && <img src={imageUrl} alt="preview" className="w-36" />}
+            {stateUser.data[0].image ? (
+              <img
+                src={stateUser.data[0].image}
+                alt="preview"
+                className="w-32"
+              />
+            ) : (
+              <span className="p-10 bg-neutral-800 text-4xl text-white">
+                <IoPerson />
+              </span>
+            )}
             <input
               type="file"
               id="image"
               {...register("image")}
-              onChange={handleImage}
               accept="image/png, image/jpg, image/jpeg"
               className="block w-full text-sm text-neutral-900 border border-gray-300 rounded-lg cursor-pointer 
             bg-gray-50 focus:outline-none"

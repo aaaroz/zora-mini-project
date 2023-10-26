@@ -17,10 +17,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { navOpen, userId } from "../../recoil";
 import { Link } from "react-router-dom";
 import { authService } from "../../configs/auth";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/get.user.slice";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
-  const uid = useRecoilValue(userId);
+  // const uid = useRecoilValue(userId);
+  const stateUser = useSelector(selectUser);
+  const { uid } = stateUser.data[0];
   const closeDrawer = () => setOpen(false);
 
   return (
@@ -160,20 +164,21 @@ export function DrawerWithNav({ isActive }) {
                 </ListItem>
               </div>
             </Link>
-
-            <div
-              className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
-              onClick={() => authService.logOut()}
-            >
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <BiLogOut />
-                  </span>
-                </ListItemPrefix>
-                Logout
-              </ListItem>
-            </div>
+            <Link to="/">
+              <div
+                className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
+                onClick={() => authService.logOut()}
+              >
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <BiLogOut />
+                    </span>
+                  </ListItemPrefix>
+                  Logout
+                </ListItem>
+              </div>
+            </Link>
           </List>
         </div>
       </Drawer>

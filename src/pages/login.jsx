@@ -1,14 +1,14 @@
 import React from "react";
 import zoraIcon from "../assets/zora.svg";
+import ButtonSubmit from "../components/auth.page/button.submit";
+import ReactHelmet from "../components/react.helmet";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchema } from "../schema/login.schema";
 import { AiOutlineGoogle } from "react-icons/ai";
-import ButtonSubmit from "../components/auth.page/button.submit";
 import { APIAuth } from "../apis/APIAuth";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import ReactHelmet from "../components/react.helmet";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ export default function Signin() {
         toast.success("login successfully!");
         return navigate(returnTo);
       }
-      // navigate("/");
     } catch (error) {
       console.error(error);
       toast.error("Your Email or Password is Wrong!");
@@ -58,8 +57,6 @@ export default function Signin() {
         toast.success("login successfully!");
         return navigate(returnTo);
       }
-      // toast.success("login successfully!");
-      // navigate("/");
     } catch (error) {
       console.error(error);
       toast.error("login failed! google oAuth is not valid!");

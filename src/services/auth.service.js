@@ -1,6 +1,7 @@
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 import { auth } from "../configs/firebase";
+import { useNavigate } from "react-router-dom";
 
 export class AuthService {
   isAuthorized() {
@@ -28,22 +29,16 @@ export class AuthService {
     Cookies.set("refreshToken", refreshToken);
   }
 
-  storeRoleToCookie({ role }) {
-    Cookies.set("userRole", role);
-  }
-
   clearCredentialsFromCookie() {
     Cookies.remove("idToken");
     Cookies.remove("oauthAccessToken");
     Cookies.remove("refreshToken");
-    Cookies.remove("userRole");
   }
 
   async logOut() {
     try {
       await signOut(auth);
       this.clearCredentialsFromCookie();
-      window.location.href = "/";
     } catch (err) {
       console.error(err);
     }

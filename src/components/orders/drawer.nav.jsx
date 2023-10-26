@@ -154,20 +154,21 @@ export function DrawerWithNav({ isActive }) {
                 </ListItem>
               </div>
             </Link>
-
-            <div
-              className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
-              onClick={() => authService.logOut()}
-            >
-              <ListItem>
-                <ListItemPrefix>
-                  <span className="text-xl">
-                    <BiLogOut />
-                  </span>
-                </ListItemPrefix>
-                Logout
-              </ListItem>
-            </div>
+            <Link to="/">
+              <div
+                className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
+                onClick={() => authService.logOut()}
+              >
+                <ListItem>
+                  <ListItemPrefix>
+                    <span className="text-xl">
+                      <BiLogOut />
+                    </span>
+                  </ListItemPrefix>
+                  Logout
+                </ListItem>
+              </div>
+            </Link>
           </List>
         </div>
       </Drawer>

@@ -17,10 +17,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { navOpen, userId } from "../../recoil";
 import { Link } from "react-router-dom";
 import { authService } from "../../configs/auth";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/get.user.slice";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
-  const uid = useRecoilValue(userId);
+  // const uid = useRecoilValue(userId);
+  const stateUser = useSelector(selectUser);
+  const { uid } = stateUser.data[0];
   const closeDrawer = () => setOpen(false);
 
   return (
@@ -56,13 +60,10 @@ export function DrawerWithNav({ isActive }) {
           <div className="ps-5 pt-7 pb-2 text-blue-gray-50">
             <Typography variant="h6">MAIN MENU</Typography>
           </div>
-
           <List>
             <Link to="/dashboard">
               <div
-                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
-                  isActive && "bg-neutral-950"
-                }`}
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
               >
                 <ListItem>
                   <ListItemPrefix>
@@ -90,7 +91,9 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/orders">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -102,7 +105,11 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/chatbot">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
+                  isActive && "bg-neutral-950"
+                }`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -114,7 +121,9 @@ export function DrawerWithNav({ isActive }) {
               </div>
             </Link>
             <Link to="/admin">
-              <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
+              <div
+                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50`}
+              >
                 <ListItem>
                   <ListItemPrefix>
                     <span className="text-xl">
@@ -153,21 +162,20 @@ export function DrawerWithNav({ isActive }) {
                 </ListItem>
               </div>
             </Link>
-            <Link to={`/settings`}>
-              <div
-                className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
-                onClick={() => authService.logOut()}
-              >
-                <ListItem>
-                  <ListItemPrefix>
-                    <span className="text-xl">
-                      <BiLogOut />
-                    </span>
-                  </ListItemPrefix>
-                  Logout
-                </ListItem>
-              </div>
-            </Link>
+
+            <div
+              className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50"
+              onClick={() => authService.logOut()}
+            >
+              <ListItem>
+                <ListItemPrefix>
+                  <span className="text-xl">
+                    <BiLogOut />
+                  </span>
+                </ListItemPrefix>
+                Logout
+              </ListItem>
+            </div>
           </List>
         </div>
       </Drawer>

@@ -1,5 +1,5 @@
 import React from "react";
-import { products } from "../../recoil";
+import { products } from "../../../recoil";
 import { useRecoilValue } from "recoil";
 import ButtonShop from "./button.shop";
 

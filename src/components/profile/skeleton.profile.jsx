@@ -4,11 +4,11 @@ export default function SkeletonProfile() {
   return (
     <div className="grid grid-cols-1 gap-5 p-5 m-5 place-items-center md:grid-cols-2 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700">
       <div className="p-10">
-        <div class="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-72 mb-2.5"></div>
-        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-        <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-6 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-72 mb-2.5"></div>
+        <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
       </div>
 
       <div className="flex flex-col items-center justify-center">
@@ -24,7 +24,7 @@ export default function SkeletonProfile() {
             <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
           </svg>
         </div>
-        <div class="h-6 bg-gray-200 rounded-md dark:bg-gray-700 w-32 mb-4"></div>
+        <div className="h-6 bg-gray-200 rounded-md dark:bg-gray-700 w-32 mb-4"></div>
       </div>
     </div>
   );

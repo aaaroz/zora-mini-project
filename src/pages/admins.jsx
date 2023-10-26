@@ -4,8 +4,8 @@ import { DrawerWithNav } from "../components/admins/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
 import Sidebar from "../components/admins/sidebar";
-import Header from "../components/dashboard/header";
 import { ProfileCard } from "../components/admins/profile.card";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function Admins() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -19,7 +19,7 @@ export default function Admins() {
       />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
+      <HeaderDashboard />
       <section className="p-5 lg:ml-64">
         <div className="md:px-10">
           <h1 className="ps-20 pt-5 text-xl font-semibold">

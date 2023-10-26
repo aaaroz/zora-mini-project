@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import blankProfile from "../assets/blank.profile.jpg";
 import ReactHelmet from "../components/react.helmet";
 import Sidebar from "../components/profile/sidebar";
-import Header from "../components/dashboard/header";
+import SkeletonProfile from "../components/profile/skeleton.profile";
 import { DrawerWithNav } from "../components/profile/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
@@ -11,8 +11,7 @@ import { auth } from "../configs/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUserById, selectUser } from "../store/get.user.slice";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Spinner } from "@material-tailwind/react";
-import SkeletonProfile from "../components/profile/skeleton.profile";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function Profile() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -36,14 +35,14 @@ export default function Profile() {
       />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
-      <section className="p-24 lg:ml-64">
+      <HeaderDashboard />
+      <section className="p-2 lg:ml-64">
         <div className="rounded-md shadow-md border bg-neutral-100">
           {stateUser.status === "loading" && <SkeletonProfile />}
           {stateUser.status === "success" &&
             stateUser.data.map((data, index) => (
               <div
-                className="grid grid-cols-1 gap-5 p-5 place-items-center md:grid-cols-2"
+                className="grid grid-cols-1 p-5 place-items-center md:grid-cols-2"
                 key={index + 1}
               >
                 <div>

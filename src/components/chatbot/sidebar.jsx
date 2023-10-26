@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../store/get.user.slice";
 
 export default function Sidebar({ isActive }) {
+  // const uid = useRecoilValue(userId);
   const stateUser = useSelector(selectUser);
   const { uid } = stateUser.data[0];
   return (
@@ -55,9 +56,7 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href="/orders"
-                className={`${
-                  isActive && "bg-neutral-950"
-                } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                className={`text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
                  hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
@@ -70,7 +69,10 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href="/chatbot"
-                className=" text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                className={`${
+                  isActive && "bg-neutral-950"
+                } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                   hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left pe-0">
                   <PiChatCenteredDotsFill />
@@ -84,7 +86,8 @@ export default function Sidebar({ isActive }) {
             <li>
               <a
                 href="/admin"
-                className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
+                className={` text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 
+                 hover:bg-neutral-950 rounded-lg mt-1`}
               >
                 <span className="text-2xl block float-left">
                   <IoPerson />
@@ -121,7 +124,7 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href="/"
+                href="/#"
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
                 onClick={() => authService.logOut()}
               >
