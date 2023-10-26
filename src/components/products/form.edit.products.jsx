@@ -43,12 +43,12 @@ export default function FormEditProduct() {
   useEffect(() => {
     if (product) {
       setValue("id", `${id}`);
-      setValue("title", `${product.data.title}`);
-      setValue("category", `${product.data.category}`);
-      setValue("description", `${product.data.description}`);
-      setValue("price", `${product.data.price}`);
-      setValue("amount", `${product.data.amount}`);
-      setValue("image", `${product.data.image}`);
+      setValue("title", `${product?.data?.title}`);
+      setValue("category", `${product?.data?.category}`);
+      setValue("description", `${product?.data?.description}`);
+      setValue("price", `${product?.data?.price}`);
+      setValue("amount", `${product?.data?.amount}`);
+      setValue("image", `${product?.data?.image}`);
     }
   }, [product, setValue, id]);
 
@@ -162,8 +162,12 @@ export default function FormEditProduct() {
               >
                 Product Image
               </label>
-              {product.data.image && (
-                <img src={product.data.image} alt="preview" className="w-36" />
+              {product?.data?.image && (
+                <img
+                  src={product?.data?.image}
+                  alt="preview"
+                  className="w-36"
+                />
               )}
               <input
                 type="file"
@@ -212,8 +216,8 @@ export default function FormEditProduct() {
                 <p className="mb-1 text-xs font-normal text-blue-gray-400 ">
                   Current Available Size :
                 </p>
-                {product.data.size &&
-                  product.data.size.map((val, index) => (
+                {product?.data?.size &&
+                  product?.data?.size.map((val, index) => (
                     <div key={index + 1}>
                       <div className="text-xs font-normal text-blue-gray-400 ">
                         <span className="text-white">-</span>

@@ -6,18 +6,34 @@ import {
 } from "../../store/get.products.slice";
 import CardProductSkeletons from "./card.product.skeletons";
 import { Link, useNavigate } from "react-router-dom";
-import { APIProduct } from "../../apis/APIProduct";
+// import { APIProduct } from "../../apis/APIProduct";
+import { GetProduct } from "../../utils/get.product";
+import { deleteDoc, doc } from "@firebase/firestore";
+import { db, imageDB } from "../../configs/firebase";
+import { deleteObject, ref } from "@firebase/storage";
 
 export default function ListProducts() {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Do you want to delete this product?")) {
-      APIProduct.deleteProduct(id).then(() => {
-        navigate(0);
-      });
+      const product = await GetProduct(id);
+
+      console.log(product);
+
+      const imageURL = product?.image.split("%2F")[1].split("?")[0];
+      console.log(imageURL);
+
+      const imageRef = ref(imageDB, `productImage/${imageURL}`);
+      const docRef = doc(db, "products", id);
+
+      await deleteObject(imageRef);
+      await deleteDoc(docRef);
+      navigate(0);
+      // APIProduct.deleteProduct(id).then(() => {
+      // });
     }
   };
 
@@ -36,7 +52,7 @@ export default function ListProducts() {
         {products.status === "success" &&
           products.data.map((product, index) => (
             <div
-              className="w-52 bg-neutral-50 rounded-lg shadow border border-slate-900"
+              className="w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900"
               key={index}
             >
               <img

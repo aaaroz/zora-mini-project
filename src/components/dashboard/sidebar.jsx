@@ -9,12 +9,27 @@ import { authService } from "../../configs/auth";
 import { userId } from "../../recoil";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
-import { selectUser } from "../../store/get.user.slice";
-import { useSelector } from "react-redux";
+import { fetchGetUserById, selectUser } from "../../store/get.user.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../configs/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
 
 export default function Sidebar({ isActive }) {
   const stateUser = useSelector(selectUser);
-  const { uid } = stateUser.data[0];
+  const [user, loading] = useAuthState(auth);
+  console.log(stateUser);
+  // const { uid } = stateUser?.data;
+  const dispatch = useDispatch();
+
+  console.log(user?.uid);
+  useEffect(() => {
+    if (loading) return;
+
+    dispatch(fetchGetUserById(user?.uid));
+    // setName(stateUser?.data[0].name);
+    // setUid(stateUser?.data[0].uid);
+  }, [dispatch]);
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
@@ -99,7 +114,7 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href={`/profile/${uid}`}
+                href={`/profile/${user?.uid}`}
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">
