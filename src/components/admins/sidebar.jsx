@@ -8,9 +8,12 @@ import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
 import { userId } from "../../recoil";
 import { useRecoilValue } from "recoil";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../configs/firebase";
 
 export default function Sidebar({ isActive }) {
-  const uid = useRecoilValue(userId);
+  // const uid = useRecoilValue(userId);
+  const [user, loading] = useAuthState(auth);
 
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
@@ -98,7 +101,7 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href={`/profile/${uid}`}
+                href={`/profile/${user?.uid}`}
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
               >
                 <span className="text-2xl block float-left">

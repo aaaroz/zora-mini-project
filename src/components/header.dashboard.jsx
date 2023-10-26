@@ -28,8 +28,8 @@ export default function HeaderDashboard() {
     if (loading) return;
 
     dispatch(fetchGetUserById(user.uid));
-    setName(stateUser?.data[0].name);
-    setUid(stateUser?.data[0].uid);
+    setName(stateUser?.data?.name);
+    setUid(stateUser?.data?.uid);
   }, [dispatch]);
   return (
     <header
