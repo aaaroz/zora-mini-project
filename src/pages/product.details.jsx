@@ -6,8 +6,8 @@ import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
 import { DrawerWithNav } from "../components/products/drawer.nav";
 import Sidebar from "../components/products/sidebar";
-import Header from "../components/dashboard/header";
 import ReactHelmet from "../components/react.helmet";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function ProductDetails() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -28,7 +28,7 @@ export default function ProductDetails() {
       />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
+      <HeaderDashboard />
       <section className="p-4 lg:ml-64">
         <div className="flex p-4  md:px-24 justify-between">
           <h2 className="text-center text-2xl font-bold leading-9 tracking-tight uppercase text-gray-900">

@@ -8,9 +8,14 @@ import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
 import { useRecoilValue } from "recoil";
 import { userId } from "../../recoil";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/get.user.slice";
 
 export default function Sidebar({ isActive }) {
-  const uid = useRecoilValue(userId);
+  // const uid = useRecoilValue(userId);
+  const stateUser = useSelector(selectUser);
+  const { uid } = stateUser.data[0];
+  console.log(uid);
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
@@ -120,7 +125,7 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href="/#"
+                href="/"
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
                 onClick={() => authService.logOut()}
               >

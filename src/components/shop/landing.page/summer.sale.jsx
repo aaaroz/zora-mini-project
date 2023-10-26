@@ -1,5 +1,5 @@
 import React from "react";
-import summerSale from "../../assets/summer.sale.svg";
+import summerSale from "../../../assets/summer.sale.svg";
 
 export default function SummerSale() {
   return (

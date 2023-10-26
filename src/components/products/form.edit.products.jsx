@@ -11,9 +11,15 @@ import {
   fetchGetProductById,
 } from "../../store/get.product.slice";
 import { imageDB } from "../../configs/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import ButtonSubmit from "../auth.page/button.submit";
 import { toast } from "react-toastify";
+import { uploadProduct } from "../../utils/upload.product";
 
 export default function FormEditProduct() {
   const [imageUrl, setImageUrl] = useState("");
@@ -46,35 +52,29 @@ export default function FormEditProduct() {
     }
   }, [product, setValue, id]);
 
-  const handleImage = (e) => {
-    const image = e.target.files[0];
-    const images = ref(imageDB, `newImages/${v4()}`);
-    uploadBytes(images, image).then((data) => {
-      getDownloadURL(data.ref).then((val) => {
-        setImageUrl(val);
-      });
-    });
-  };
-
-  const onSubmit = (product) => {
-    if (product.image.length === 1) {
-      const id = product.id;
-      const newData = { ...product, image: imageUrl };
+  const onSubmit = async (data) => {
+    if (data.image.length === 1) {
+      const photo = product.data.image.split("%2F")[1].split("?")[0];
+      const imageRef = ref(imageDB, `productImage/${photo}`);
+      deleteObject(imageRef);
+      const imageURL = await uploadProduct(data.image[0]);
+      const id = data.id;
+      const newData = { ...data, image: imageURL };
       APIProduct.updateProduct(id, newData).then(() => {
         toast.success("Data has been updated!");
         navigate("/products");
       });
     } else {
-      console.log(product);
-      const image = product.image;
-      const id = product.id;
-      const newData = { ...product, image: image };
+      const image = product.data.image;
+      const id = data.id;
+      const newData = { ...data, image: image };
       APIProduct.updateProduct(id, newData).then(() => {
         toast.success("Data has been updated!");
         navigate("/products");
       });
     }
   };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center lg:px-8">
@@ -162,14 +162,13 @@ export default function FormEditProduct() {
               >
                 Product Image
               </label>
-              {imageUrl && (
-                <img src={imageUrl} alt="preview" className="w-36" />
+              {product.data.image && (
+                <img src={product.data.image} alt="preview" className="w-36" />
               )}
               <input
                 type="file"
                 id="image"
                 {...register("image")}
-                onChange={handleImage}
                 accept="image/png, image/jpg, image/jpeg"
                 className="block w-full text-sm text-neutral-900 border border-gray-300 rounded-lg cursor-pointer 
             bg-gray-50 focus:outline-none"
@@ -339,7 +338,7 @@ export default function FormEditProduct() {
               )}
             </div>
             <div className="mb-2">
-              <ButtonSubmit text={"Add Product"} />
+              <ButtonSubmit text={"Edit Product"} />
             </div>
           </form>
         </div>

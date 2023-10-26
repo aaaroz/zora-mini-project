@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRecoilValue } from "recoil";
 import { serverTimestamp } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { APIProduct } from "../../apis/APIProduct";
-import { auth, imageDB } from "../../configs/firebase";
 import { displayName } from "../../recoil";
 import { ProductSchema } from "../../schema/product.schema";
 import ButtonSubmit from "../auth.page/button.submit";
+import { uploadProduct } from "../../utils/upload.product";
 
 export default function FormAddProducts() {
-  const [imageUrl, setImageUrl] = useState("");
   const name = useRecoilValue(displayName);
   const navigate = useNavigate();
 
@@ -25,20 +21,11 @@ export default function FormAddProducts() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(ProductSchema) });
 
-  const handleImage = (e) => {
-    const image = e.target.files[0];
-    const images = ref(imageDB, `Images/${v4()}`);
-    uploadBytes(images, image).then((data) => {
-      getDownloadURL(data.ref).then((val) => {
-        setImageUrl(val);
-      });
-    });
-  };
-
-  const onSubmit = (product) => {
+  const onSubmit = async (product) => {
+    const imageURL = await uploadProduct(product.image[0]);
     const newData = {
       ...product,
-      image: imageUrl,
+      image: imageURL,
       admin: name,
       createdAt: serverTimestamp(),
     };
@@ -118,14 +105,10 @@ export default function FormAddProducts() {
               >
                 Product Image
               </label>
-              {imageUrl && (
-                <img src={imageUrl} alt="preview" className="w-36" />
-              )}
               <input
                 type="file"
                 id="image"
                 {...register("image")}
-                onChange={handleImage}
                 accept="image/png, image/jpg, image/jpeg"
                 className="block w-full text-sm text-neutral-900 border border-gray-300 rounded-lg cursor-pointer 
                 bg-gray-50 focus:outline-none"

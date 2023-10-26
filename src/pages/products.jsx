@@ -2,11 +2,11 @@ import React from "react";
 import { DrawerWithNav } from "../components/products/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
-import Sidebar from "../components/products/sidebar";
 import { Link } from "react-router-dom";
+import Sidebar from "../components/products/sidebar";
 import ListProducts from "../components/products/list.products";
-import Header from "../components/dashboard/header";
 import ReactHelmet from "../components/react.helmet";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function Products() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -20,9 +20,9 @@ export default function Products() {
       />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
+      <HeaderDashboard />
       <section className="p-4 lg:ml-64">
-        <div className="flex p-4 justify-between px-24">
+        <div className="flex p-4 justify-between md:px-24">
           <select
             name="category"
             className="rounded-md border-0 py-1.5 px-2

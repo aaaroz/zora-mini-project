@@ -1,8 +1,8 @@
 import React from "react";
-import sampleHoodie from "../../assets/sample.hoodie.svg";
-import sampleTshirt from "../../assets/sample.tshirt.svg";
-import sampleBottom from "../../assets/sample.bottoms.svg";
-import sampleJacket from "../../assets/sample.jacket.svg";
+import sampleHoodie from "../../../assets/sample.hoodie.svg";
+import sampleTshirt from "../../../assets/sample.tshirt.svg";
+import sampleBottom from "../../../assets/sample.bottoms.svg";
+import sampleJacket from "../../../assets/sample.jacket.svg";
 import ButtonShop from "./button.shop";
 
 export default function Categories() {

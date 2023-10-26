@@ -13,6 +13,8 @@ import Orders from "../pages/orders";
 import Admins from "../pages/admins";
 import Profile from "../pages/profile";
 import Settings from "../pages/settings";
+import ProtectedRoute from "./protected.route";
+import Chatbot from "../pages/chatbot";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -20,8 +22,10 @@ export default function Routers() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<ProtectedRoute />}>
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products" element={<Products />} />
@@ -29,6 +33,7 @@ export default function Routers() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/admin" element={<Admins />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />

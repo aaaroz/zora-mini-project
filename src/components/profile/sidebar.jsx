@@ -119,7 +119,7 @@ export default function Sidebar({ isActive }) {
             </li>
             <li>
               <a
-                href="/#"
+                href="/"
                 className="text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 hover:bg-neutral-950 rounded-lg mt-1"
                 onClick={() => authService.logOut()}
               >

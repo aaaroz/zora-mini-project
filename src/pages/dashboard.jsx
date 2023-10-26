@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/dashboard/sidebar";
-import Header from "../components/dashboard/header";
+// import Header from "../components/dashboard/header";
 import totalSales from "../assets/total.sales.svg";
 import totalOrders from "../assets/total.orders.svg";
 import totalProducts from "../assets/total.products.svg";
@@ -18,6 +18,7 @@ import {
   productSalesDognutChartData,
 } from "../data";
 import ReactHelmet from "../components/react.helmet";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function Dashboard() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -31,7 +32,7 @@ export default function Dashboard() {
       />
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
+      <HeaderDashboard />
       <section className="p-4 lg:ml-64">
         <div className="p-4 border-gray-200 border-dashed rounded-lg ">
           <div className="grid grid-cols-1 gap-2 gap-y-9 place-items-center sm:grid-cols-2 md:grid-cols-3">

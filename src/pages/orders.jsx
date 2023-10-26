@@ -4,8 +4,8 @@ import Sidebar from "../components/orders/sidebar";
 import { DrawerWithNav } from "../components/orders/drawer.nav";
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
-import Header from "../components/dashboard/header";
 import TableOrders from "../components/orders/table.orders";
+import HeaderDashboard from "../components/header.dashboard";
 
 export default function Orders() {
   const isActive = useRecoilValue(sidebarIsActive);
@@ -20,7 +20,7 @@ export default function Orders() {
 
       <DrawerWithNav isActive={isActive} />
       <Sidebar isActive={isActive} />
-      <Header />
+      <HeaderDashboard />
       <section className="p-5 lg:ml-64">
         <div className="md:px-10 rounded-lg border-gray-200">
           <h1 className="py-5 text-xl font-semibold">Orders List</h1>
