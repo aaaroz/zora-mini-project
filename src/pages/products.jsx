@@ -23,26 +23,14 @@ export default function Products() {
       <HeaderDashboard />
       <section className="p-4 lg:ml-64">
         <div className="flex p-4 justify-between md:px-24">
-          <select
-            name="category"
-            className="rounded-md border-0 py-1.5 px-2
-                 text-gray-900 shadow-sm ring-1 ring-inset cursor-pointer ring-gray-300
-                 focus:ring-0.1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6"
-          >
-            <option value="">Sort by Category</option>
-            <option value="Hoodie">Hoodie</option>
-            <option value="T-Shirt">T-Shirt</option>
-            <option value="Bottoms">Bottoms</option>
-            <option value="Jacket">Jacket</option>
-            <option value="Accessories">Accessories</option>
-          </select>
+          <h1 className="md:ps-24 py-5 text-xl font-semibold">Products List</h1>
+
           <Link to="/add-product">
             <button className="rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white bg-neutral-900 hover:bg-neutral-950">
               Create Product
             </button>
           </Link>
         </div>
-        <h1 className="ps-24 py-5 text-xl font-semibold">Products List</h1>
         <ListProducts />
       </section>
     </>
