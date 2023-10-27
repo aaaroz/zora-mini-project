@@ -42,7 +42,7 @@ export const APIAuth = {
           name: user.displayName,
           authProvider: "google",
           email: user.email,
-          photoUrl: user.photoURL,
+          image: null,
           createdAt: serverTimestamp(),
         });
       }
@@ -65,6 +65,7 @@ export const APIAuth = {
         name,
         authProvider: "local",
         email,
+        image: null,
         createdAt: serverTimestamp(),
       });
       toast.success("your data has been signup successfully!");

@@ -6,29 +6,22 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
-import { userId } from "../../recoil";
-import { useRecoilValue } from "recoil";
+
 import { Link } from "react-router-dom";
-import { fetchGetUserById, selectUser } from "../../store/get.user.slice";
-import { useDispatch, useSelector } from "react-redux";
+import { fetchGetUserById } from "../../store/get.user.slice";
+import { useDispatch } from "react-redux";
 import { auth } from "../../configs/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 
 export default function Sidebar({ isActive }) {
-  const stateUser = useSelector(selectUser);
   const [user, loading] = useAuthState(auth);
-  console.log(stateUser);
-  // const { uid } = stateUser?.data;
   const dispatch = useDispatch();
 
-  console.log(user?.uid);
   useEffect(() => {
     if (loading) return;
 
     dispatch(fetchGetUserById(user?.uid));
-    // setName(stateUser?.data[0].name);
-    // setUid(stateUser?.data[0].uid);
   }, [dispatch]);
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
