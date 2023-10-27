@@ -4,6 +4,9 @@ import { useRecoilState } from "recoil";
 import { navOpen } from "../../recoil";
 import { IoCloseSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { HiOutlineShoppingCart } from "react-icons/hi";
+import { Tooltip } from "@material-tailwind/react";
+import Cart from "./cart";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useRecoilState(navOpen);
@@ -37,7 +40,7 @@ export default function Navbar() {
         >
           <li className="md:ml-4 text-md md:my-0 hover:bg-neutral-950 p-3 pb-4 mt-3 md:hover:bg-transparent">
             <a
-              href="/#"
+              href="/"
               className={`hover:text-blue-gray-500 ms-16 md:ms-0 duration-100`}
             >
               Home {isOpen}
@@ -45,15 +48,15 @@ export default function Navbar() {
           </li>
           <li className="md:ml-4 text-md md:my-0 hover:bg-neutral-950 p-3 pb-4 mt-3 md:hover:bg-transparent">
             <a
-              href="/#"
-              className={`hover:text-blue-gray-500 ms-16 md:ms-0 duration-100`}
+              href="/drops"
+              className={`hover:text-blue-gray-500 active:text-blue-gray-600 ms-16 md:ms-0 duration-100`}
             >
               Drops
             </a>
           </li>
           <li className="md:ml-4 text-md md:my-0 hover:bg-neutral-950 p-3 pb-4 mt-3 md:hover:bg-transparent">
             <a
-              href="/#"
+              href="/categories"
               className={`hover:text-blue-gray-500 ms-16 md:ms-0 duration-100`}
             >
               Categories
@@ -61,10 +64,10 @@ export default function Navbar() {
           </li>
           <li className="md:ml-4 text-md md:my-0 hover:bg-neutral-950 p-3 pb-4 mt-3 md:hover:bg-transparent">
             <a
-              href="/#"
+              href="/accessories"
               className={`hover:text-blue-gray-500 ms-16 md:ms-0 duration-100`}
             >
-              About
+              Accessories
             </a>
           </li>
           <li className="md:ml-4 text-md md:my-0 hover:bg-neutral-950 p-3 pb-4 mt-3 md:hover:bg-transparent">
@@ -75,8 +78,22 @@ export default function Navbar() {
               Dashboard
             </a>
           </li>
+          <a
+            href="/shopping-cart"
+            className="hidden md:flex p-4 rounded-full text-2xl text-white bg-neutral-900 "
+          >
+            <Cart />
+          </a>
         </ul>
       </div>
+      <Tooltip content="Your Personal Shopping Chart">
+        <a
+          href="/shopping-cart"
+          className="absolute right-3 top-24 p-4 rounded-full text-2xl md:hidden text-white bg-neutral-900"
+        >
+          <Cart />
+        </a>
+      </Tooltip>
     </nav>
   );
 }
