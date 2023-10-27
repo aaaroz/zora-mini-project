@@ -10,7 +10,6 @@ import { usersAdmin } from "../../recoil";
 
 export function ProfileCard() {
   const userAdmin = useRecoilValue(usersAdmin);
-
   return (
     <>
       {userAdmin &&

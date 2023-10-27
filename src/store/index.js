@@ -7,8 +7,9 @@ import storage from "redux-persist/lib/storage";
 import products from "./get.products.slice";
 import product from "./get.product.slice";
 import user from "./get.user.slice";
+import cart from "./cart.slice";
 
-const rootReducer = combineReducers({ products, product, user });
+const rootReducer = combineReducers({ products, product, user, cart });
 
 const persistConfig = { key: root, storage };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { products } from "../../../recoil";
 import { useRecoilValue } from "recoil";
 import ButtonShop from "./button.shop";
+import { Link } from "react-router-dom";
 
 export default function Popular() {
   const productsState = useRecoilValue(products);
@@ -57,8 +58,9 @@ export default function Popular() {
             </div>
           ))}
       </div>
-
-      <ButtonShop teks={`read more`} />
+      <Link to="/drops">
+        <ButtonShop teks={`read more`} />
+      </Link>
 
       {/* Skeleton v */}
       {/* <div className="w-52 p-1 border border-gray-200 rounded shadow animate-pulse md:p-3">

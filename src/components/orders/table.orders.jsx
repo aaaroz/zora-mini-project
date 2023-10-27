@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Chip, Typography } from "@material-tailwind/react";
 import { AiFillEdit } from "react-icons/ai";
+import { useRecoilValue } from "recoil";
+import { allOrders } from "../../recoil";
 
-const TABLE_HEAD = ["No", "Name", "Email", "Price", "Status", "Date", "Action"];
+const TABLE_HEAD = ["No", "Name", "Email", "Price", "Status", "Action"];
 
 const TABLE_ROWS = [
   {
@@ -48,6 +50,8 @@ const TABLE_ROWS = [
 ];
 
 export default function TableOrders() {
+  const stateOrders = useRecoilValue(allOrders);
+
   return (
     <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
@@ -70,7 +74,7 @@ export default function TableOrders() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(({ name, email, price, status, date }, index) => {
+          {stateOrders.map(({ name, email, totalPrice, status }, index) => {
             const isLast = index === TABLE_ROWS.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-neutral-950";
 
@@ -109,7 +113,7 @@ export default function TableOrders() {
                     color="white"
                     className="font-normal"
                   >
-                    {price}
+                    {totalPrice}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -125,15 +129,6 @@ export default function TableOrders() {
                         : "red"
                     }
                   />
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    color="white"
-                    className="font-normal"
-                  >
-                    {date}
-                  </Typography>
                 </td>
                 <td className={classes}>
                   <Typography
