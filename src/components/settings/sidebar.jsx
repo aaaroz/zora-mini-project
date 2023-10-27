@@ -15,7 +15,6 @@ export default function Sidebar({ isActive }) {
   // const uid = useRecoilValue(userId);
   const stateUser = useSelector(selectUser);
   const { uid } = stateUser.data[0];
-  console.log(uid);
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">

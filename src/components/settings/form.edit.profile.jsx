@@ -51,25 +51,45 @@ export default function FormEditProfile() {
 
   const onSubmit = async (user) => {
     if (user.image.length === 1) {
-      const photo = stateUser.data[0].image.split("%2F")[1].split("?")[0];
-      const imageRef = ref(imageDB, `photos/${photo}`);
-      deleteObject(imageRef);
+      if (stateUser?.data[0].image === null) {
+        const imageURL = await uploadPhoto(user.image[0]);
+        const id = user.id;
+        const newData = { ...user, image: imageURL };
+        APIUser.updateUser(id, newData).then(() => {
+          toast.success("Data has been updated!");
+          navigate(`/profile/${user.uid}`);
+        });
+      } else {
+        const photo = stateUser.data[0].image.split("%2F")[1].split("?")[0];
+        const imageRef = ref(imageDB, `photos/${photo}`);
+        await deleteObject(imageRef);
 
-      const imageURL = await uploadPhoto(user.image[0]);
-      const id = user.id;
-      const newData = { ...user, image: imageURL };
-      APIUser.updateUser(id, newData).then(() => {
-        toast.success("Data has been updated!");
-        navigate(`/profile/${user.uid}`);
-      });
+        const imageURL = await uploadPhoto(user.image[0]);
+        const id = user.id;
+        const newData = { ...user, image: imageURL };
+        APIUser.updateUser(id, newData).then(() => {
+          toast.success("Data has been updated!");
+          navigate(`/profile/${user.uid}`);
+        });
+      }
     } else {
-      const image = stateUser.data[0].image;
-      const id = user.id;
-      const newData = { ...user, image: image };
-      APIUser.updateUser(id, newData).then(() => {
-        toast.success("Data has been updated!");
-        navigate(`/profile/${user.uid}`);
-      });
+      if (stateUser?.data[0].image === null) {
+        const image = null;
+        const id = user.id;
+        const newData = { ...user, image: image };
+        APIUser.updateUser(id, newData).then(() => {
+          toast.success("Data has been updated!");
+          navigate(`/profile/${user.uid}`);
+        });
+      } else {
+        const image = stateUser.data[0].image;
+        const id = user.id;
+        const newData = { ...user, image: image };
+        APIUser.updateUser(id, newData).then(() => {
+          toast.success("Data has been updated!");
+          navigate(`/profile/${user.uid}`);
+        });
+      }
     }
   };
 
