@@ -115,7 +115,9 @@ export default function ChatbotAi() {
                   )}
                 </span>
 
-                <Markdown>{message.message}</Markdown>
+                <div className="flex flex-col">
+                  <Markdown>{message.message}</Markdown>
+                </div>
               </div>
             </div>
           );
