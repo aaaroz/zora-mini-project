@@ -16,6 +16,7 @@ export default function ProductDetails() {
   const { id } = useParams();
 
   useEffect(() => {
+    // get product by id
     dispatch(fetchGetProductById(id));
   }, [dispatch, id]);
 

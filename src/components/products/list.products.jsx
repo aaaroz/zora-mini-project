@@ -6,7 +6,6 @@ import {
 } from "../../store/get.products.slice";
 import CardProductSkeletons from "./card.product.skeletons";
 import { Link, useNavigate } from "react-router-dom";
-// import { APIProduct } from "../../apis/APIProduct";
 import { GetProduct } from "../../utils/get.product";
 import { deleteDoc, doc } from "@firebase/firestore";
 import { db, imageDB } from "../../configs/firebase";
@@ -18,23 +17,21 @@ export default function ListProducts() {
   const products = useSelector(selectProducts);
   const navigate = useNavigate();
 
+  // handle delete product
   const handleDelete = async (id) => {
     if (window.confirm("Do you want to delete this product?")) {
+      // get product by id
       const product = await GetProduct(id);
 
-      console.log(product);
-
-      const imageURL = product?.image.split("%2F")[1].split("?")[0];
-      console.log(imageURL);
-
-      const imageRef = ref(imageDB, `productImage/${imageURL}`);
+      // get image id for delete product image in storage
+      const imageId = product?.image.split("%2F")[1].split("?")[0];
+      // create image reference
+      const imageRef = ref(imageDB, `productImage/${imageId}`);
       const docRef = doc(db, "products", id);
 
       await deleteObject(imageRef);
       await deleteDoc(docRef);
       navigate(0);
-      // APIProduct.deleteProduct(id).then(() => {
-      // });
     }
   };
 
@@ -42,6 +39,7 @@ export default function ListProducts() {
     dispatch(fetchGetProducts());
   }, [dispatch]);
 
+  // handle change on select form to make a sorting by category
   const handleChange = (e) => {
     const value = e.target.value;
     const res = products.data.filter(({ category }) => category === `${value}`);

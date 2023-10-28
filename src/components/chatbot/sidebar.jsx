@@ -6,13 +6,10 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
-import { userId } from "../../recoil";
-import { useRecoilValue } from "recoil";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/get.user.slice";
 
 export default function Sidebar({ isActive }) {
-  // const uid = useRecoilValue(userId);
   const stateUser = useSelector(selectUser);
   const { uid } = stateUser.data[0];
   return (

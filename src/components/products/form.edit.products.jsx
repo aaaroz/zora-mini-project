@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { v4 } from "uuid";
+import React, { useEffect } from "react";
+import ButtonSubmit from "../auth.page/button.submit";
 import { APIProduct } from "../../apis/APIProduct";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,19 +10,12 @@ import {
   selectProduct,
   fetchGetProductById,
 } from "../../store/get.product.slice";
+import { deleteObject, ref } from "firebase/storage";
 import { imageDB } from "../../configs/firebase";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
-import ButtonSubmit from "../auth.page/button.submit";
 import { toast } from "react-toastify";
 import { uploadProduct } from "../../utils/upload.product";
 
 export default function FormEditProduct() {
-  const [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,10 +30,12 @@ export default function FormEditProduct() {
   const { id } = useParams();
 
   useEffect(() => {
+    // get product by id
     dispatch(fetchGetProductById(id));
   }, [dispatch, id]);
 
   useEffect(() => {
+    // set old value into a form
     if (product) {
       setValue("id", `${id}`);
       setValue("title", `${product?.data?.title}`);
@@ -53,12 +48,20 @@ export default function FormEditProduct() {
   }, [product, setValue, id]);
 
   const onSubmit = async (data) => {
+    // if user upload a new product image
     if (data.image.length === 1) {
-      const photo = product.data.image.split("%2F")[1].split("?")[0];
-      const imageRef = ref(imageDB, `productImage/${photo}`);
+      // get product image id
+      const imageId = product.data.image.split("%2F")[1].split("?")[0];
+
+      // create image reference, then delete image from storage firebase
+      const imageRef = ref(imageDB, `productImage/${imageId}`);
       deleteObject(imageRef);
+
+      // get new image url after upload a new product image
       const imageURL = await uploadProduct(data.image[0]);
       const id = data.id;
+
+      //destructure new data, then update product data
       const newData = { ...data, image: imageURL };
       APIProduct.updateProduct(id, newData).then(() => {
         toast.success("Data has been updated!");

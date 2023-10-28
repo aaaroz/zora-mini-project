@@ -2,20 +2,20 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
 import { imageDB } from "../configs/firebase";
 
-export const uploadProduct = async (photoFile) => {
-  // Check if photo is null
-  if (!photoFile) return null;
+export const uploadProduct = async (productImage) => {
+  // Check if image is null
+  if (!productImage) return null;
 
   // Get the file extension
-  const extension = photoFile?.name?.split(".").pop();
+  const extension = productImage?.name?.split(".").pop();
 
-  // Generate a unique name for the photo
+  // Generate a unique name for the image
   const storageRef = ref(imageDB, `productImage/${uuid()}.${extension}`);
 
-  // Upload photo to storage
-  const uploadTask = await uploadBytes(storageRef, photoFile);
+  // Upload image to storage
+  const uploadTask = await uploadBytes(storageRef, productImage);
 
-  // Get the photo URL
+  // Get the image URL
   const downloadURL = await getDownloadURL(uploadTask.ref);
   return downloadURL;
 };

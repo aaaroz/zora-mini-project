@@ -13,14 +13,13 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { BiLogOut, BiSolidShoppingBags } from "react-icons/bi";
 import { RiDashboardFill } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { navOpen, userId } from "../../recoil";
+import { useRecoilState } from "recoil";
+import { navOpen } from "../../recoil";
 import { Link } from "react-router-dom";
 import { authService } from "../../configs/auth";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
-  const uid = useRecoilValue(userId);
   const closeDrawer = () => setOpen(false);
 
   return (
@@ -130,22 +129,20 @@ export function DrawerWithNav({ isActive }) {
             <div className="ps-5 pt-7 pb-2 text-blue-gray-50">
               <Typography variant="h6">HELP & SUPPORT</Typography>
             </div>
-            <Link to={`/profile/${uid}`}>
-              <div
-                className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
-                  isActive && "bg-neutral-950"
-                }`}
-              >
-                <ListItem>
-                  <ListItemPrefix>
-                    <span className="text-xl">
-                      <IoPersonCircleSharp />
-                    </span>
-                  </ListItemPrefix>
-                  Profile
-                </ListItem>
-              </div>
-            </Link>
+            <div
+              className={`active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50 ${
+                isActive && "bg-neutral-950"
+              }`}
+            >
+              <ListItem>
+                <ListItemPrefix>
+                  <span className="text-xl">
+                    <IoPersonCircleSharp />
+                  </span>
+                </ListItemPrefix>
+                Profile
+              </ListItem>
+            </div>
             <Link to={`/settings`}>
               <div className="active:bg-neutral-950 focus:bg-neutral-950 hover:bg-neutral-950 rounded-md text-blue-gray-50">
                 <ListItem>

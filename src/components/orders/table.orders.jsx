@@ -1,53 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Card, Chip, Typography } from "@material-tailwind/react";
 import { AiFillEdit } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { allOrders } from "../../recoil";
 
 const TABLE_HEAD = ["No", "Name", "Email", "Price", "Status", "Action"];
-
-const TABLE_ROWS = [
-  {
-    id: 1,
-    name: "John Michael",
-    email: "john.doe@example.com",
-    price: "$120",
-    status: "delivered",
-    date: "23/04/18",
-  },
-  {
-    id: 2,
-    name: "Alexa Liras",
-    email: "john.doe@example.com",
-    price: "$120",
-    status: "delivered",
-    date: "23/04/18",
-  },
-  {
-    id: 3,
-    name: "Laurent Perrier",
-    email: "john.doe@example.com",
-    price: "$120",
-    status: "ongoing",
-    date: "19/09/17",
-  },
-  {
-    id: 4,
-    name: "Michael Levi",
-    email: "john.doe@example.com",
-    price: "$120",
-    status: "ongoing",
-    date: "24/12/08",
-  },
-  {
-    id: 5,
-    name: "Richard Gran",
-    email: "john.doe@example.com",
-    price: "$120",
-    status: "canceled",
-    date: "04/10/21",
-  },
-];
 
 export default function TableOrders() {
   const stateOrders = useRecoilValue(allOrders);
@@ -75,11 +32,14 @@ export default function TableOrders() {
         </thead>
         <tbody>
           {stateOrders.map(({ name, email, totalPrice, status }, index) => {
-            const isLast = index === TABLE_ROWS.length - 1;
+            const isLast = index === stateOrders.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-neutral-950";
 
             return (
-              <tr key={name} className="odd:bg-neutral-600 even:bg-neutral-500">
+              <tr
+                key={index}
+                className="odd:bg-neutral-600 even:bg-neutral-500"
+              >
                 <td className={classes}>
                   <Typography
                     variant="small"

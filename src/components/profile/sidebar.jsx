@@ -94,7 +94,6 @@ export default function Sidebar({ isActive }) {
           <ul className="mt-5">
             <li>
               <a
-                href={`/profile/${uid}`}
                 className={`${
                   isActive && "bg-neutral-950"
                 } text-sm flex items-center gap-x-4 cursor-pointer p-2 pb-3 

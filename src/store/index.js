@@ -9,12 +9,16 @@ import product from "./get.product.slice";
 import user from "./get.user.slice";
 import cart from "./cart.slice";
 
+// combine reducer
 const rootReducer = combineReducers({ products, product, user, cart });
 
+// persist configuration
 const persistConfig = { key: root, storage };
 
+// create persist reducer
 const pReducer = persistReducer(persistConfig, rootReducer);
 
+// store configuration
 const store = configureStore({
   reducer: pReducer,
   middleware: (getDefaultMiddleware) => {

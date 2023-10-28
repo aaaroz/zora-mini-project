@@ -9,6 +9,7 @@ import {
 import { db } from "../configs/firebase";
 
 export const APIUser = {
+  // get user auth by id
   getUser: async (id) => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", id));
@@ -24,6 +25,7 @@ export const APIUser = {
     }
   },
 
+  // update user auth data by id
   updateUser: async (id, data) => {
     try {
       const docRef = doc(db, "users", id);

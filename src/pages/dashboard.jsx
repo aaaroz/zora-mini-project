@@ -1,11 +1,12 @@
 import React from "react";
 import Sidebar from "../components/dashboard/sidebar";
-// import Header from "../components/dashboard/header";
 import totalSales from "../assets/total.sales.svg";
 import totalOrders from "../assets/total.orders.svg";
 import totalProducts from "../assets/total.products.svg";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
+import ReactHelmet from "../components/react.helmet";
+import HeaderDashboard from "../components/header.dashboard";
 
 import { useRecoilValue } from "recoil";
 import { sidebarIsActive } from "../recoil";
@@ -17,8 +18,6 @@ import {
   productSalesDognutChartOptions,
   productSalesDognutChartData,
 } from "../data";
-import ReactHelmet from "../components/react.helmet";
-import HeaderDashboard from "../components/header.dashboard";
 
 export default function Dashboard() {
   const isActive = useRecoilValue(sidebarIsActive);

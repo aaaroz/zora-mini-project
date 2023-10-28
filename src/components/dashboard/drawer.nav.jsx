@@ -13,8 +13,8 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { BiLogOut, BiSolidShoppingBags } from "react-icons/bi";
 import { RiDashboardFill } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { navOpen, userId } from "../../recoil";
+import { useRecoilState } from "recoil";
+import { navOpen } from "../../recoil";
 import { Link } from "react-router-dom";
 import { authService } from "../../configs/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -22,13 +22,13 @@ import { auth } from "../../configs/firebase";
 
 export function DrawerWithNav({ isActive }) {
   const [open, setOpen] = useRecoilState(navOpen);
-  // const uid = useRecoilValue(userId);
   const [user, loading] = useAuthState(auth);
 
   const closeDrawer = () => setOpen(false);
 
   return (
     <React.Fragment>
+      {loading && <></>}
       <Drawer open={open} onClose={closeDrawer}>
         <div className="bg-neutral-900 h-screen lg:hidden">
           <div className=" text-blue-gray-50 mb-2 ms-6 flex items-center justify-between p-4 pb-1 pr-0">
