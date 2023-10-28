@@ -1,32 +1,31 @@
 import React from "react";
+import ButtonSubmit from "../auth.page/button.submit";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRecoilValue } from "recoil";
 import { serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { APIProduct } from "../../apis/APIProduct";
-import { displayName } from "../../recoil";
 import { ProductSchema } from "../../schema/product.schema";
-import ButtonSubmit from "../auth.page/button.submit";
 import { uploadProduct } from "../../utils/upload.product";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/get.user.slice";
 
 export default function FormAddProducts() {
-  // const name = useRecoilValue(displayName);
-
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const { name } = user?.data[0];
 
+  // configure handling form with useForm from react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(ProductSchema) });
 
+  // handle onSubmit form
   const onSubmit = async (product) => {
+    // get image URL
     const imageURL = await uploadProduct(product.image[0]);
     const newData = {
       ...product,

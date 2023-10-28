@@ -61,7 +61,7 @@ export default function HeaderDashboard() {
               </div>
               <div className="px-3 justify-center items-center hidden sm:flex sm:flex-col-reverse md:flex-col-reverse lg:flex-row">
                 <div className="flex pt-3 sm:pb-2 sm:pt-0 lg:pt-0 items-center">
-                  <span className="text-2xl ps-4">
+                  <span className="text-2xl px-4">
                     <IoIosNotifications />
                   </span>
                   {data.image ? (

@@ -6,17 +6,15 @@ import { IoPerson, IoPersonCircleSharp } from "react-icons/io5";
 import { PiChatCenteredDotsFill } from "react-icons/pi";
 import { RiDashboardFill } from "react-icons/ri";
 import { authService } from "../../configs/auth";
-import { userId } from "../../recoil";
-import { useRecoilValue } from "recoil";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../configs/firebase";
 
 export default function Sidebar({ isActive }) {
-  // const uid = useRecoilValue(userId);
   const [user, loading] = useAuthState(auth);
 
   return (
     <aside className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0">
+      {loading && <></>}
       <div className="h-full py-3 overflow-y-auto bg-neutral-900 text-blue-gray-50">
         <div className="pt-5 pb-11 border-b-2">
           <h1 className="text-center font-semibold text-3xl">DASHBOARD</h1>

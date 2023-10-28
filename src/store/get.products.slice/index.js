@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APIProduct } from "../../apis/APIProduct";
 
+// create async thunk for get all products
 export const fetchGetProducts = createAsyncThunk(
   "fetch/getProducts",
   APIProduct.getProducts
 );
 
+// initial state for products
 const initialState = {
   message: "",
   status: "idle",
   data: null,
 };
 
+// configure slice
 const getProductsSlice = createSlice({
   name: "products",
   initialState,

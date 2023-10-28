@@ -14,6 +14,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const { search } = useLocation();
 
+  // configure handle form
   const {
     register,
     handleSubmit,
@@ -22,18 +23,23 @@ export default function Signin() {
     resolver: yupResolver(LoginSchema),
   });
 
+  // handle signin with email and password
   const signIn = async ({ email, password }) => {
     try {
+      // store credentials
       await APIAuth.signInWithCredentials({ email, password });
 
       let returnTo = "/";
       const params = new URLSearchParams(search);
       const redirectTo = params.get("return_to");
+      // check if there are other routes besides the signin route
       if (redirectTo) {
+        // if there is, it will be directed directly to that route
         returnTo += redirectTo;
         toast.success("login successfully!");
         return navigate(returnTo);
       } else {
+        // if not, then it will be directed to the landing page
         toast.success("login successfully!");
         return navigate(returnTo);
       }
@@ -43,6 +49,7 @@ export default function Signin() {
     }
   };
 
+  // handle signin with google oauth
   const signInWithGoogle = async () => {
     try {
       await APIAuth.signInWithGoogleOAuth();

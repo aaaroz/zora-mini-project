@@ -6,7 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer
+        autoClose={2000}
+        position="top-center"
+        theme="dark"
+        hideProgressBar={true}
+      />
       <Routers />
     </>
   );

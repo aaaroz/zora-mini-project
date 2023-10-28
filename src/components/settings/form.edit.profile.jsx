@@ -31,7 +31,9 @@ export default function FormEditProfile() {
   }, []);
 
   useEffect(() => {
+    // checking if user had an profile photo or not
     if (stateUser) {
+      // condition when user didn't have profile photo
       stateUser.data.map((data) => {
         setValue("id", `${data.id}`);
         setValue("uid", `${user?.uid}`);
@@ -39,6 +41,7 @@ export default function FormEditProfile() {
         setValue("email", `${data.email}`);
       });
     } else if (stateUser.data?.image) {
+      // condition when user have an profile photo
       stateUser.data.map((data) => {
         setValue("id", `${data.id}`);
         setValue("uid", `${user?.uid}`);
@@ -50,8 +53,11 @@ export default function FormEditProfile() {
   }, [setValue, user]);
 
   const onSubmit = async (user) => {
+    // check if user input a new photo
     if (user.image.length === 1) {
+      // checking, when user have a photo profile before or not
       if (stateUser?.data[0].image === null) {
+        // when user didn't have a photo profile before, then get imageURL and then upload new photo profile and update user data
         const imageURL = await uploadPhoto(user.image[0]);
         const id = user.id;
         const newData = { ...user, image: imageURL };
@@ -60,10 +66,13 @@ export default function FormEditProfile() {
           navigate(`/profile/${user.uid}`);
         });
       } else {
+        // when user have a photo profile before
+        // first, get old photo profile url, then deleted old photo profile
         const photo = stateUser.data[0].image.split("%2F")[1].split("?")[0];
         const imageRef = ref(imageDB, `photos/${photo}`);
         await deleteObject(imageRef);
 
+        // get new imageURL, then update user data
         const imageURL = await uploadPhoto(user.image[0]);
         const id = user.id;
         const newData = { ...user, image: imageURL };
@@ -72,8 +81,11 @@ export default function FormEditProfile() {
           navigate(`/profile/${user.uid}`);
         });
       }
+      // condition when user didn't upload a new photo profile
     } else {
+      // checking, when user have a photo profile before or not.
       if (stateUser?.data[0].image === null) {
+        // when user didn't have a photo profile before, then set image value with null
         const image = null;
         const id = user.id;
         const newData = { ...user, image: image };
@@ -82,6 +94,7 @@ export default function FormEditProfile() {
           navigate(`/profile/${user.uid}`);
         });
       } else {
+        // when user have a photo profile before, then set image value with available photo profile url
         const image = stateUser.data[0].image;
         const id = user.id;
         const newData = { ...user, image: image };

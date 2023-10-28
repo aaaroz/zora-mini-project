@@ -3,6 +3,7 @@ import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+// firebase configuration
 const firebaseConfig = {
   apiKey: process.env.VITE_APP_API_KEY,
   authDomain: process.env.VITE_APP_AUTH_DOMAIN,

@@ -11,6 +11,7 @@ import { db } from "../configs/firebase";
 import { toast } from "react-toastify";
 
 export const APIProduct = {
+  // get all products from firestore
   getProducts: async () => {
     try {
       const result = await getDocs(collection(db, "products"));
@@ -25,6 +26,7 @@ export const APIProduct = {
     }
   },
 
+  // get one product by id
   getProduct: async (id) => {
     try {
       const docRef = doc(db, "products", id);
@@ -37,6 +39,7 @@ export const APIProduct = {
     }
   },
 
+  // create new product
   addProduct: async (product) => {
     try {
       const docRef = await addDoc(collection(db, "products"), product);
@@ -48,6 +51,7 @@ export const APIProduct = {
     }
   },
 
+  // delete one product by id
   deleteProduct: async (id) => {
     try {
       const docRef = doc(db, "products", id);
@@ -60,6 +64,7 @@ export const APIProduct = {
     }
   },
 
+  // update product by id
   updateProduct: async (id, data) => {
     try {
       const docRef = doc(db, "products", id);

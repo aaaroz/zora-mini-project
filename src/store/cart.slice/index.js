@@ -5,14 +5,17 @@ const initialState = {
   totalProducts: 0,
 };
 
+// configure cart slice
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // actions
     addToCart: (state, action) => {
       state.data.push(action.payload);
       state.totalProducts = state.data.length;
     },
+    // actions for make empty cart
     deleteCart: (state) => {
       state.data = [];
       state.totalProducts = 0;

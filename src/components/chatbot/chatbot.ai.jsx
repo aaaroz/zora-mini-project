@@ -6,6 +6,7 @@ import { RiOpenaiFill, RiSendPlaneFill } from "react-icons/ri";
 import { openai } from "../../configs/openai";
 import Markdown from "react-markdown";
 
+// configure system openai context
 const systemMessage = {
   role: "system",
   content:
@@ -13,32 +14,35 @@ const systemMessage = {
 };
 
 export default function ChatbotAi() {
+  // initial state
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm Brody! Ask me anything!",
+      message: "Hello, I'm Brody! your helpful assistant, Ask me anything!",
       sentTime: "now",
       sender: "Brody",
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
 
+  // configure handle form
   const { register, handleSubmit, resetField } = useForm();
 
   //function for handle send button
   const handleSend = async ({ message }) => {
     resetField("message");
+
     //add a newMessage from user
     const newMessage = {
       message,
-      direction: "outgoing",
       sender: "user",
     };
 
     const newMessages = [...messages, newMessage];
 
+    // set a newMessages into messages state
     setMessages(newMessages);
-
     setIsTyping(true);
+
     //call a function for process message to chatgpt
     await processMessageToChatGPT(newMessages);
   };
@@ -48,7 +52,7 @@ export default function ChatbotAi() {
     //format messages for OpenAI API
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
-      if (messageObject.sender === "ChatGPT") {
+      if (messageObject.sender === "Brody") {
         role = "assistant";
       } else {
         role = "user";
@@ -59,13 +63,14 @@ export default function ChatbotAi() {
     //call openai API with try & catch
     try {
       //create chat completions with model gpt-3.5-turbo
-      const response = await openai.chat.completions
+      await openai.chat.completions
         .create({
           model: "gpt-3.5-turbo",
           messages: [systemMessage, ...apiMessages],
-          max_tokens: 50,
+          max_tokens: 100,
         })
         .then((data) => {
+          // set a messages answer from gpt
           setMessages([
             ...chatMessages,
             {
@@ -98,11 +103,7 @@ export default function ChatbotAi() {
               className="p-5 text-sm text-left text-white odd:bg-neutral-800 even:bg-neutral-900"
               key={i}
             >
-              <div
-                className={`flex flex-row items-center ${
-                  message.sentTime === "now" && "hidden"
-                }`}
-              >
+              <div className={`flex flex-row items-center`}>
                 <span>
                   {message.sender === "Brody" ? (
                     <div className="bg-green-400 p-1 me-5 md:p-2 rounded-sm text-2xl md:me-16">

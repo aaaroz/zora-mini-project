@@ -9,6 +9,7 @@ import {
 import { atom, selector } from "recoil";
 import { db } from "../configs/firebase";
 
+// state atom
 const price = atom({
   key: "total-price",
   default: 0,
@@ -44,6 +45,7 @@ const userData = atom({
   default: null,
 });
 
+// get only 4 products, by query
 const products = selector({
   key: "products-data",
   get: async () => {
@@ -57,7 +59,6 @@ const products = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -66,6 +67,7 @@ const products = selector({
   },
 });
 
+// get all products
 const allProducts = selector({
   key: "all-products",
   get: async () => {
@@ -79,7 +81,6 @@ const allProducts = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -88,6 +89,7 @@ const allProducts = selector({
   },
 });
 
+// get all bottom products
 const allBottoms = selector({
   key: "all-bottoms",
   get: async () => {
@@ -101,7 +103,6 @@ const allBottoms = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -110,6 +111,7 @@ const allBottoms = selector({
   },
 });
 
+// get all hoodie products
 const allHoodie = selector({
   key: "all-Hoodie",
   get: async () => {
@@ -123,7 +125,6 @@ const allHoodie = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -132,6 +133,7 @@ const allHoodie = selector({
   },
 });
 
+// get all t-shirt products
 const allTshirt = selector({
   key: "all-Tshirt",
   get: async () => {
@@ -145,7 +147,6 @@ const allTshirt = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -154,6 +155,7 @@ const allTshirt = selector({
   },
 });
 
+// get all jacket products
 const allJacket = selector({
   key: "all-Jacket",
   get: async () => {
@@ -167,7 +169,6 @@ const allJacket = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -176,6 +177,7 @@ const allJacket = selector({
   },
 });
 
+// get all accessories products from firestore
 const allAccessories = selector({
   key: "all-Accessories",
   get: async () => {
@@ -189,7 +191,6 @@ const allAccessories = selector({
         ...doc.data(),
         id: doc.id,
       }));
-      // const lastDoc = result.docs[result.docs.length - 1];
       product = products;
     } catch (error) {
       console.error(error);
@@ -198,6 +199,7 @@ const allAccessories = selector({
   },
 });
 
+// get admin auth from firestore database
 const usersAdmin = selector({
   key: "users-admin",
   get: async () => {
@@ -218,6 +220,7 @@ const usersAdmin = selector({
   },
 });
 
+// get all orders data from firestore
 const allOrders = selector({
   key: "get-order",
   get: async () => {
