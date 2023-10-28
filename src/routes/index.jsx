@@ -42,12 +42,14 @@ export default function Routers() {
       <Route path="/categories/tshirt" element={<Tshirt />} />
       <Route path="/accessories" element={<Accessories />} />
       <Route path="/shopping-cart" element={<ShoppingCart />} />
+
       {/* --protected route-- */}
       {/* if user is authorized, they cannot go to this route */}
       <Route path="/" element={<ProtectedRoute />}>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
       </Route>
+
       {/* --private route-- */}
       {/* if user is not authorized, they cannot go to this route */}
       <Route path="/" element={<PrivateRoute />}>
@@ -62,6 +64,7 @@ export default function Routers() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
+
       {/* handle not found route */}
       <Route path="/*" element={<NotFound />} />
     </Routes>

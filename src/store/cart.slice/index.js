@@ -15,7 +15,7 @@ const cartSlice = createSlice({
       state.data.push(action.payload);
       state.totalProducts = state.data.length;
     },
-    // actions for make empty cart
+    // actions for make cart empty
     deleteCart: (state) => {
       state.data = [];
       state.totalProducts = 0;
