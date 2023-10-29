@@ -1,10 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { RecoilRoot } from "recoil";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store, { persistor } from "./store/index.js";
+import { PersistGate } from "redux-persist/integration/react";
+import SpinnerLoading from "./components/spinner.loading.jsx";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <BrowserRouter>
+      <RecoilRoot>
+        <Suspense fallback={<SpinnerLoading />}>
+          <Provider store={store}>
+            <PersistGate persistor={persistor}>
+              <App />
+            </PersistGate>
+          </Provider>
+        </Suspense>
+      </RecoilRoot>
+    </BrowserRouter>
+  </React.StrictMode>
+);
