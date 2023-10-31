@@ -5,6 +5,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../configs/firebase";
@@ -14,7 +16,10 @@ export const APIProduct = {
   // get all products from firestore
   getProducts: async () => {
     try {
-      const result = await getDocs(collection(db, "products"));
+      const productRef = collection(db, "products");
+      const result = await getDocs(
+        query(productRef, orderBy("createdAt", "desc"))
+      );
       const products = result.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
