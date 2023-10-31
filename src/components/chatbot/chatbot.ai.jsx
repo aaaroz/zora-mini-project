@@ -25,7 +25,13 @@ export default function ChatbotAi() {
   const [isTyping, setIsTyping] = useState(false);
 
   // configure handle form
-  const { register, handleSubmit, resetField } = useForm();
+  const {
+    register,
+    handleSubmit,
+    resetField,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   //function for handle send button
   const handleSend = async ({ message }) => {
@@ -93,6 +99,40 @@ export default function ChatbotAi() {
       ]);
     }
   }
+
+  function ButtonSubmit() {
+    if (watch("message")) {
+      return (
+        <button
+          type="submit"
+          className="m-2 p-2 rounded-md transition-all text-white bg-green-400 "
+        >
+          <RiSendPlaneFill />
+        </button>
+      );
+    } else if (isTyping) {
+      return (
+        <button
+          type="submit"
+          className="m-2 p-2 rounded-md transition-all text-white bg-green-400 disabled:bg-neutral-700 disabled:text-neutral-500"
+          disabled
+        >
+          <RiSendPlaneFill />
+        </button>
+      );
+    }
+
+    return (
+      <button
+        type="submit"
+        className="m-2 p-2 rounded-md transition-all text-white bg-green-400 disabled:bg-neutral-700 disabled:text-neutral-500"
+        disabled
+      >
+        <RiSendPlaneFill />
+      </button>
+    );
+  }
+
   return (
     <>
       <div className="bg-neutral-800 rounded-sm text-neutral-300 text-center text-sm pt-5 h-[480px]  overflow-y-auto">
@@ -103,7 +143,7 @@ export default function ChatbotAi() {
               className="p-5 text-sm text-left text-white odd:bg-neutral-800 even:bg-neutral-900"
               key={i}
             >
-              <div className={`flex flex-row items-center`}>
+              <div className={`flex flex-row items-start`}>
                 <span>
                   {message.sender === "Brody" ? (
                     <div className="bg-green-400 p-1 me-5 md:p-2 rounded-sm text-2xl md:me-16">
@@ -140,7 +180,7 @@ export default function ChatbotAi() {
                 type="text"
                 placeholder="Send a message"
                 className="w-full h-auto text-sm text-white bg-transparent border-transparent focus:ring-transparent focus:border-transparent"
-                {...register("message")}
+                {...register("message", { required: true })}
               />
             ) : (
               <input
@@ -150,12 +190,7 @@ export default function ChatbotAi() {
                 disabled
               />
             )}
-            <button
-              type="submit"
-              className="m-2 p-2 rounded-md text-white bg-green-400 "
-            >
-              <RiSendPlaneFill />
-            </button>
+            <ButtonSubmit />
           </div>
         </form>
       </div>

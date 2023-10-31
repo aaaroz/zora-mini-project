@@ -44,8 +44,11 @@ export default function ProductDetails() {
 
         {stateProduct.status === "loading" && <p>Loading...</p>}
         {stateProduct.status === "success" && (
-          <section className="grid grid-cols-1 gap-10 md:grid-cols-2 p-4 px-24">
-            <div key={id}>
+          <section
+            className="grid grid-cols-1 gap-10 md:grid-cols-2 p-4 px-24"
+            key={id}
+          >
+            <div>
               <h2 className="text-based text-xl font-bold tracking-tight uppercase py-4 text-gray-900">
                 {stateProduct.data.title}
               </h2>
@@ -59,11 +62,8 @@ export default function ProductDetails() {
 
               {stateProduct.data.size &&
                 stateProduct.data.size.map((val, index) => (
-                  <div>
-                    <div
-                      className="text-sm font-normal text-neutral-900"
-                      key={index + 1}
-                    >
+                  <div key={index + 1}>
+                    <div className="text-sm font-normal text-neutral-900">
                       <span>- </span>
                       {val}
                     </div>

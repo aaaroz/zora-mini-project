@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CardHeader,
   CardBody,
@@ -5,15 +7,19 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { IoPerson } from "react-icons/io5";
-import { useRecoilValue } from "recoil";
-import { usersAdmin } from "../../recoil";
+import { fetchGetUsers, selectUsers } from "../../store/get.users.slice";
 
 export function ProfileCard() {
-  const userAdmin = useRecoilValue(usersAdmin);
+  const dispatch = useDispatch();
+  const userAdmin = useSelector(selectUsers);
+
+  useEffect(() => {
+    dispatch(fetchGetUsers());
+  }, []);
   return (
     <>
       {userAdmin &&
-        userAdmin.map((user, index) => (
+        userAdmin.data.map((user, index) => (
           <div
             className="w-52 rounded-xl drop-shadow-md border border-gray-300 bg-white"
             key={index + 1}
@@ -23,10 +29,10 @@ export function ProfileCard() {
               className="h-32 pb-5 m-0 flex justify-center items-end bg-neutral-900"
             >
               <div className="flex justify-center items-center w-20 h-20 rounded-full bg-white">
-                {user.image ? (
+                {user?.image ? (
                   <img
-                    src={user.image}
-                    alt={user.name}
+                    src={user?.image}
+                    alt={user?.name}
                     className="w-20 h-20 rounded-full object-cover object-center"
                   />
                 ) : (
@@ -37,7 +43,10 @@ export function ProfileCard() {
               </div>
             </CardHeader>
             <CardBody className="text-center">
-              <Typography color="black" className="mb-2 text-lg font-semibold">
+              <Typography
+                color="black"
+                className="mb-2 capitalize text-lg font-semibold"
+              >
                 {user.name}
               </Typography>
               <Typography className="font-medium text-xs text-neutral-400">

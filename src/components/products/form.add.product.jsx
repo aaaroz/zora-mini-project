@@ -1,5 +1,5 @@
-import React from "react";
-import ButtonSubmit from "../auth.page/button.submit";
+import React, { useState } from "react";
+import ButtonSubmit, { ButtonSubmitDisable } from "../auth.page/button.submit";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { serverTimestamp } from "firebase/firestore";
@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../store/get.user.slice";
 
 export default function FormAddProducts() {
+  const [isSubmited, setIsSubmited] = useState(false);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const { name } = user?.data[0];
@@ -25,6 +26,7 @@ export default function FormAddProducts() {
 
   // handle onSubmit form
   const onSubmit = async (product) => {
+    setIsSubmited(true);
     // get image URL
     const imageURL = await uploadProduct(product.image[0]);
     const newData = {
@@ -267,7 +269,11 @@ export default function FormAddProducts() {
               )}
             </div>
             <div className="mb-2">
-              <ButtonSubmit text={"Add Product"} />
+              {isSubmited ? (
+                <ButtonSubmitDisable text={"Product Added"} />
+              ) : (
+                <ButtonSubmit text={"Add Product"} />
+              )}
             </div>
           </form>
         </div>
