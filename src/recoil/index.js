@@ -199,27 +199,6 @@ const allAccessories = selector({
   },
 });
 
-// get admin auth from firestore database
-const usersAdmin = selector({
-  key: "users-admin",
-  get: async () => {
-    let userAdmin = null;
-    try {
-      const userRef = collection(db, "users");
-      const result = await getDocs(query(userRef, orderBy("createdAt", "asc")));
-      const user = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      userAdmin = user;
-    } catch (error) {
-      alert("API calls failed");
-      console.error(error);
-    }
-    return userAdmin;
-  },
-});
-
 // get all orders data from firestore
 const allOrders = selector({
   key: "get-order",
@@ -255,7 +234,6 @@ export {
   allJacket,
   allAccessories,
   displayName,
-  usersAdmin,
   userId,
   userData,
   userImage,
