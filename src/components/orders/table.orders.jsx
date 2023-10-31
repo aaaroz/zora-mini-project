@@ -3,6 +3,7 @@ import { Card, Chip, Typography } from "@material-tailwind/react";
 import { AiFillEdit } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { allOrders } from "../../recoil";
+import OrderDetail from "./order.detail";
 
 const TABLE_HEAD = ["No", "Name", "Email", "Price", "Status", "Action"];
 
@@ -31,7 +32,7 @@ export default function TableOrders() {
           </tr>
         </thead>
         <tbody>
-          {stateOrders.map(({ name, email, totalPrice, status }, index) => {
+          {stateOrders.map(({ id, name, email, totalPrice, status }, index) => {
             const isLast = index === stateOrders.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-neutral-950";
 
@@ -73,7 +74,7 @@ export default function TableOrders() {
                     color="white"
                     className="font-normal"
                   >
-                    {totalPrice}
+                    ${totalPrice}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -91,18 +92,7 @@ export default function TableOrders() {
                   />
                 </td>
                 <td className={classes}>
-                  <Typography
-                    as="a"
-                    href="#"
-                    variant="small"
-                    color="white"
-                    className="font-medium flex"
-                  >
-                    <span className="text-lg pe-2">
-                      <AiFillEdit />
-                    </span>
-                    Edit
-                  </Typography>
+                  <OrderDetail id={id} />
                 </td>
               </tr>
             );
