@@ -28,15 +28,6 @@ export default function Orders() {
             <button className="px-4 py-1 rounded-lg text-xs border text-white bg-neutral-900 border-neutral-800 hover:bg-neutral-950 hover:text-white focus:bg-neutral-900 focus:text-white">
               All Orders
             </button>
-            <button className="px-4 py-1 rounded-lg text-xs border border-neutral-800 hover:bg-neutral-950 hover:text-white focus:bg-neutral-900 focus:text-white">
-              Delivered
-            </button>
-            <button className="px-4 py-1 rounded-lg text-xs border border-neutral-800 hover:bg-neutral-950 hover:text-white focus:bg-neutral-900 focus:text-white">
-              Ongoing
-            </button>
-            <button className="px-4 py-1 rounded-lg text-xs border border-neutral-800 hover:bg-neutral-950 hover:text-white focus:bg-neutral-900 focus:text-white">
-              Canceled
-            </button>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <TableOrders />

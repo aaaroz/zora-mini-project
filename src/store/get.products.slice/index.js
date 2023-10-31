@@ -12,12 +12,18 @@ const initialState = {
   message: "",
   status: "idle",
   data: null,
+  shouldFetchLatestData: false,
 };
 
 // configure slice
 const getProductsSlice = createSlice({
   name: "products",
   initialState,
+  reducers: {
+    toggleFetchLatestData: (state) => {
+      state.shouldFetchLatestData = !state.shouldFetchLatestData;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase("fetch/getProducts/pending", (state) => {
       state.status = "loading";
@@ -35,5 +41,6 @@ const getProductsSlice = createSlice({
 });
 
 export const selectProducts = (state) => state.products;
+export const { toggleFetchLatestData } = getProductsSlice.actions;
 
 export default getProductsSlice.reducer;

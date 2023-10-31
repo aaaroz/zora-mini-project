@@ -16,17 +16,22 @@ export default function ShopCart() {
   const handleClose = () => setIsShow(undefined);
 
   const { data: products, totalProducts } = useSelector(selectCart);
+
   let totalPrice = 0;
 
-  useEffect(() => {
-    products.forEach((product) => {
+  function getTotalPrice() {
+    products.map((product) => {
       totalPrice += product.price;
       setStateTotalPrice(totalPrice);
     });
-  }, [products]);
+    return totalPrice;
+  }
 
   return (
-    <section className="flex flex-col items-center">
+    <section
+      className="flex flex-col items-center"
+      onLoad={() => getTotalPrice()}
+    >
       <h1 className="pt-14 text-center text-1xl font-bold uppercase hover:border-b-4 border-neutral-900 pb-2 md:text-3xl md:pt-20 ">
         Shopping Cart
       </h1>
