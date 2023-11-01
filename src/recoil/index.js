@@ -199,29 +199,6 @@ const allAccessories = selector({
   },
 });
 
-// get all orders data from firestore
-const allOrders = selector({
-  key: "get-order",
-  get: async () => {
-    let allOrders = null;
-    try {
-      const ordersRef = collection(db, "orders");
-      const result = await getDocs(
-        query(ordersRef, orderBy("createdAt", "asc"))
-      );
-      const orders = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      allOrders = orders;
-    } catch (error) {
-      alert("API calls failed");
-      console.error(error);
-    }
-    return allOrders;
-  },
-});
-
 export {
   price,
   navOpen,
@@ -237,5 +214,4 @@ export {
   userId,
   userData,
   userImage,
-  allOrders,
 };

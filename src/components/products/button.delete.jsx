@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Button, Modal } from "flowbite-react";
-import { GetProduct } from "../../utils/get.product";
-import { db, imageDB } from "../../configs/firebase";
+import { useDispatch } from "react-redux";
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
-import { toggleFetchLatestData } from "../../store/get.products.slice";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { GetProduct } from "../../utils/get.product";
+import { db, imageDB } from "../../configs/firebase";
+import { toggleFetchLatestProducts } from "../../store/get.products.slice";
+import { APIProduct } from "../../apis/APIProduct";
 
 export default function ButtonDelete({ id }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,10 +21,11 @@ export default function ButtonDelete({ id }) {
     const imageId = product?.image.split("%2F")[1].split("?")[0];
     // create image reference
     const imageRef = ref(imageDB, `productImage/${imageId}`);
-    const docRef = doc(db, "products", id);
     await deleteObject(imageRef);
-    await deleteDoc(docRef);
-    dispatch(toggleFetchLatestData());
+    APIProduct.deleteProduct(id);
+    // const docRef = doc(db, "products", id);
+    // await deleteDoc(docRef);
+    dispatch(toggleFetchLatestProducts());
     toast.warn("Product Deleted Successfully!");
   };
 
