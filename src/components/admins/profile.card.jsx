@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { IoPerson } from "react-icons/io5";
 import { fetchGetUsers, selectUsers } from "../../store/get.users.slice";
+import ProfileCardSkeleton from "./profile.card.skeleton";
 
 export function ProfileCard() {
   const dispatch = useDispatch();
@@ -18,9 +19,13 @@ export function ProfileCard() {
   }, []);
   return (
     <>
-      {userAdmin.status === "loading" && <p>Loading..</p>}
-      {userAdmin.status === "failed" && <p>Something wrong happend..!</p>}
-
+      {userAdmin.status === "loading" &&
+        userAdmin?.data?.map(({ uid }) => (
+          <div key={uid}>
+            <ProfileCardSkeleton />
+          </div>
+        ))}
+      {userAdmin.status === "failed" && <p>Something wrong happen..!</p>}
       {userAdmin.status === "success" &&
         userAdmin?.data?.map((user, index) => (
           <div

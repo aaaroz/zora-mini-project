@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import zoraBlack from "../assets/zora.svg";
-import { FaSearch } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
-import { displayName, navOpen, userId } from "../recoil";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 
+import zoraBlack from "../assets/zora.svg";
+
 import { auth } from "../configs/firebase";
+import { displayName, navOpen, userId } from "../recoil";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUserById, selectUser } from "../store/get.user.slice";
@@ -41,7 +41,7 @@ export default function HeaderDashboard() {
             <div className="flex justify-between" key={index}>
               <div className="flex">
                 <button
-                  className="inline-flex items-center p-1 mt-2 ml-3 text-2xl text-neutral-900 rounded-lg lg:hidden hover:bg-neutral-50 focus:outline-none
+                  className="inline-flex items-center p-1 mt-2 ml-1 text-2xl text-neutral-900 rounded-lg lg:hidden hover:bg-neutral-50 focus:outline-none
         focus:ring-2 focus:ring-neutral-800"
                   onClick={openDrawer}
                 >
@@ -51,7 +51,7 @@ export default function HeaderDashboard() {
                   <img
                     src={zoraBlack}
                     alt="logo"
-                    className="w-14 md:w-16 mx-8 "
+                    className="w-14 md:w-16 mx-5 "
                   />
                 </Link>
 

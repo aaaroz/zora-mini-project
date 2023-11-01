@@ -11,8 +11,8 @@ import {
   fetchGetProductCategory,
   selectProductsByCategory,
 } from "../../store/get.product.category.slice";
-import CardProductSkeletons from "./card.product.skeletons";
 import ButtonDelete from "./button.delete";
+import CardProductSkeleton from "./card.product.skeleton";
 
 export default function ListProducts() {
   const [category, setCategory] = useState("");
@@ -54,12 +54,13 @@ export default function ListProducts() {
           <option value="Accessories">Accessories</option>
         </select>
       </div>
-      {products.status === "loading" && (
-        <div>
-          <CardProductSkeletons />
-        </div>
-      )}
       <section className="grid grid-cols-1 justify-items-center gap-10 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+        {products.status === "loading" &&
+          products.data.map(({ title }) => (
+            <div key={title}>
+              <CardProductSkeleton />
+            </div>
+          ))}
         {products.status === "success" &&
           products.data.map((product, index) => (
             <div

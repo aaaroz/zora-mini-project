@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Button, Modal } from "flowbite-react";
 import { useDispatch } from "react-redux";
-import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { toast } from "react-toastify";
 import { GetProduct } from "../../utils/get.product";
-import { db, imageDB } from "../../configs/firebase";
+import { imageDB } from "../../configs/firebase";
 import { toggleFetchLatestProducts } from "../../store/get.products.slice";
 import { APIProduct } from "../../apis/APIProduct";
 
@@ -23,8 +22,7 @@ export default function ButtonDelete({ id }) {
     const imageRef = ref(imageDB, `productImage/${imageId}`);
     await deleteObject(imageRef);
     APIProduct.deleteProduct(id);
-    // const docRef = doc(db, "products", id);
-    // await deleteDoc(docRef);
+
     dispatch(toggleFetchLatestProducts());
     toast.warn("Product Deleted Successfully!");
   };
