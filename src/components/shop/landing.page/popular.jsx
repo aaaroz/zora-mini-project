@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { products } from "../../../recoil";
 import { useRecoilValue } from "recoil";
+
 import ButtonShop from "./button.shop";
-import { Link } from "react-router-dom";
 
 export default function Popular() {
   const productsState = useRecoilValue(products);
@@ -35,11 +36,8 @@ export default function Popular() {
                   </div>
                   {product.size &&
                     product.size.map((val, index) => (
-                      <div>
-                        <div
-                          className="text-sm font-normal text-slate-900 font-['Roboto']"
-                          key={index + 1}
-                        >
+                      <div key={index + 1}>
+                        <div className="text-sm font-normal text-slate-900 font-['Roboto']">
                           <span className="text-white">-</span>
                           {val}
                         </div>

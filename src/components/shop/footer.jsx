@@ -1,5 +1,4 @@
 import React from "react";
-import map from "../../assets/map.svg";
 import { AiFillPhone } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 
@@ -40,10 +39,16 @@ export default function Footer() {
         </form>
       </div>
       <div>
-        <h1 className="text-center md:text-left text-md font-bold uppercase px-4 pb-8 mb-5 md:text-2xl text-white">
+        <h1 className="text-center md:text-left text-md font-bold uppercase px-4 pb-2 mb-5 md:text-2xl text-white">
           Trunojoyo, Bandung
         </h1>
-        <img src={map} alt="map" />
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.892831130417!2d107.61074867427602!3d-6.903417767558446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e649b62a39bd%3A0x77c9993f555f4f32!2sJl.%20Trunojoyo%2C%20Citarum%2C%20Kec.%20Bandung%20Wetan%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040115!5e0!3m2!1sid!2sid!4v1698842040356!5m2!1sid!2sid"
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] lg:w-[30rem] lg:h-[25rem]"
+        />
         <div className="grid grid-cols-1 xl:grid-cols-2">
           <div className="m-5 text-white">
             <div className="flex gap-3 mb-3 justify-center lg:justify-start">

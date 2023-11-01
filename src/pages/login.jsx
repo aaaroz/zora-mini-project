@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import zoraIcon from "../assets/zora.svg";
-import ButtonSubmit from "../components/auth.page/button.submit";
+import ButtonSubmit, {
+  ButtonSubmitDisable,
+} from "../components/auth.page/button.submit";
 import ReactHelmet from "../components/react.helmet";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,8 +13,9 @@ import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Signin() {
-  const navigate = useNavigate();
+  const [isSubmited, setIsSubmited] = useState(false);
   const { search } = useLocation();
+  const navigate = useNavigate();
 
   // configure handle form
   const {
@@ -25,6 +28,7 @@ export default function Signin() {
 
   // handle signin with email and password
   const signIn = async ({ email, password }) => {
+    setIsSubmited(true);
     try {
       // store credentials
       await APIAuth.signInWithCredentials({ email, password });
@@ -43,14 +47,15 @@ export default function Signin() {
         toast.success("login successfully!");
         return navigate(returnTo);
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Your Email or Password is Wrong!");
+    } catch (err) {
+      console.error(err);
+      setIsSubmited(false);
     }
   };
 
-  // handle signin with google oauth
+  // // handle signin with google oauth
   const signInWithGoogle = async () => {
+    setIsSubmited(true);
     try {
       await APIAuth.signInWithGoogleOAuth();
       let returnTo = "/";
@@ -66,9 +71,50 @@ export default function Signin() {
       }
     } catch (error) {
       console.error(error);
-      toast.error("login failed! google oAuth is not valid!");
+      setIsSubmited(false);
     }
   };
+
+  function ButtonSignIn() {
+    if (isSubmited) {
+      return <ButtonSubmitDisable text={"Signed in...!"} />;
+    } else {
+      return <ButtonSubmit text={"Sign In"} />;
+    }
+  }
+
+  function ButtonSigninWithGoogle() {
+    if (isSubmited) {
+      return (
+        <button
+          type="button"
+          onClick={signInWithGoogle}
+          className="flex w-full justify-center rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium leading-7 text-white shadow-sm hover:bg-neutral-950 focus-visible:outline 
+focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+          disabled
+        >
+          <span className="text-xl mt-1 me-2">
+            <AiOutlineGoogle />
+          </span>
+          Sign in with google
+        </button>
+      );
+    } else {
+      return (
+        <button
+          type="button"
+          onClick={signInWithGoogle}
+          className="flex w-full justify-center rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium leading-7 text-white shadow-sm hover:bg-neutral-950 focus-visible:outline 
+focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+        >
+          <span className="text-xl mt-1 me-2">
+            <AiOutlineGoogle />
+          </span>
+          Sign in with google
+        </button>
+      );
+    }
+  }
 
   return (
     <>
@@ -99,6 +145,7 @@ export default function Signin() {
                   id="email"
                   type="email"
                   {...register("email")}
+                  autoComplete="current-email"
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${
                     errors.email &&
@@ -127,6 +174,7 @@ export default function Signin() {
                   id="password"
                   type="password"
                   {...register("password")}
+                  autoComplete="current-password"
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${
                     errors.password &&
@@ -141,25 +189,15 @@ export default function Signin() {
               </div>
             </div>
             <div>
-              <ButtonSubmit text={"Sign In"} />
+              <ButtonSignIn />
             </div>
             <div>
-              <button
-                type="button"
-                onClick={signInWithGoogle}
-                className="flex w-full justify-center rounded-md bg-neutral-900 px-3 py-1.5 text-sm font-medium leading-7 text-white shadow-sm hover:bg-neutral-950 focus-visible:outline 
-            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-              >
-                <span className="text-xl mt-1 me-2">
-                  <AiOutlineGoogle />
-                </span>
-                Sign in with google
-              </button>
+              <ButtonSigninWithGoogle />
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Don't have an account?{" "}
+            Don't have an account?
             <a
               href="/signup"
               className="font-bold leading-6 text-neutral-900 hover:text-neutral-950"

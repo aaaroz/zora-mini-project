@@ -84,6 +84,21 @@ export default function OrderDetail({ id }) {
               <p>Address : {stateOrder?.address}</p>
             </div>
             <OrderDate />
+            <div>
+              <p>Products Ordered: </p>
+
+              {stateOrder?.products ? (
+                stateOrder?.products.map(({ title }, index) => (
+                  <div key={index} className="capitalize">
+                    <span>- </span>
+                    {title}
+                  </div>
+                ))
+              ) : (
+                <p>None</p>
+              )}
+            </div>
+
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex items-center mb-3">
                 <label htmlFor="status">Status : </label>
