@@ -38,13 +38,13 @@ export default function ListProducts() {
 
   return (
     <section className="flex flex-col items-center w-full">
-      <div className="p-3">
+      <div className="p-3 ms-16 mb-3 self-start">
         <select
           name="category"
           onChange={handleChange}
-          className="rounded-md border-0 py-1.5 px-2 
-        text-gray-900 shadow-sm ring-1 ring-inset cursor-pointer ring-gray-300
-        focus:ring-0.1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6"
+          className="rounded-md border-0 py-1.5 px-5
+        text-neutral-900 shadow-sm ring-1 ring-inset cursor-pointer ring-neutral-300
+        focus:ring-0.1 focus:ring-inset focus:ring-neutral-900 sm:text-sm sm:leading-6"
         >
           <option value="">All Category</option>
           <option value="Hoodie">Hoodie</option>
