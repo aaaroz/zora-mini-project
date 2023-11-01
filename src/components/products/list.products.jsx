@@ -64,7 +64,7 @@ export default function ListProducts() {
           products.data.map((product, index) => (
             <div
               className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900 ${
-                productsByCategory.data.length > 0 && "hidden"
+                productsByCategory?.data?.length > 0 && "hidden"
               }`}
               key={index}
             >
@@ -95,7 +95,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size?.length === 0 && (
+                  {product?.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
@@ -160,7 +160,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size?.length === 0 && (
+                  {product?.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
