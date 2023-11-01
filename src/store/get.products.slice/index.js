@@ -12,7 +12,7 @@ const initialState = {
   message: "",
   status: "idle",
   data: null,
-  shouldFetchLatestData: false,
+  shouldFetchLatestProducts: false,
 };
 
 // configure slice
@@ -20,8 +20,8 @@ const getProductsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    toggleFetchLatestData: (state) => {
-      state.shouldFetchLatestData = !state.shouldFetchLatestData;
+    toggleFetchLatestProducts: (state) => {
+      state.shouldFetchLatestProducts = !state.shouldFetchLatestProducts;
     },
   },
   extraReducers: (builder) => {
@@ -41,6 +41,6 @@ const getProductsSlice = createSlice({
 });
 
 export const selectProducts = (state) => state.products;
-export const { toggleFetchLatestData } = getProductsSlice.actions;
+export const { toggleFetchLatestProducts } = getProductsSlice.actions;
 
 export default getProductsSlice.reducer;

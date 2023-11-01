@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Typography } from "@material-tailwind/react";
-import { selectCart } from "../../../store/cart.slice";
-import { useSelector } from "react-redux";
+import { deleteCart, selectCart } from "../../../store/cart.slice";
+import { useDispatch, useSelector } from "react-redux";
 import ModalOrder from "./modal.order";
 import { useRecoilState } from "recoil";
 import { price } from "../../../recoil";
+import { useNavigate } from "react-router-dom";
 
 const TABLE_HEAD = ["No", "Name", "Image", "Price", "Quantity"];
 
 export default function ShopCart() {
   const [isShow, setIsShow] = useState("");
   const [stateTotalPrice, setStateTotalPrice] = useRecoilState(price);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleShow = () => setIsShow("show");
   const handleClose = () => setIsShow(undefined);
@@ -27,6 +30,11 @@ export default function ShopCart() {
     return totalPrice;
   }
 
+  const handleDeleteCart = () => {
+    dispatch(deleteCart());
+    navigate(0);
+  };
+
   return (
     <section
       className="flex flex-col items-center"
@@ -36,7 +44,15 @@ export default function ShopCart() {
         Shopping Cart
       </h1>
       <div className="w-screen px-16">
-        <Card className="mt-16 w-full h-full overflow-scroll">
+        <div className="flex justify-end">
+          <button
+            className="me-28 px-4 py-1 rounded text-white bg-neutral-900"
+            onClick={handleDeleteCart}
+          >
+            Empty Cart
+          </button>
+        </div>
+        <Card className="mt-5 w-full h-full overflow-scroll">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>

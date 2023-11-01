@@ -1,30 +1,59 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import {
   fetchGetProducts,
   selectProducts,
-  toggleFetchLatestData,
+  toggleFetchLatestProducts,
 } from "../../store/get.products.slice";
 import CardProductSkeletons from "./card.product.skeletons";
 import ButtonDelete from "./button.delete";
+import {
+  fetchGetProductCategory,
+  selectProductsByCategory,
+} from "../../store/get.product.category.slice";
 
 export default function ListProducts() {
+  const [category, setCategory] = useState("");
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
-  const { shouldFetchLatestData } = useSelector(selectProducts);
+  const { shouldFetchLatestProducts } = useSelector(selectProducts);
+  const productsByCategory = useSelector(selectProductsByCategory);
 
   useEffect(() => {
-    if (shouldFetchLatestData) {
-      dispatch(toggleFetchLatestData());
+    if (shouldFetchLatestProducts) {
+      dispatch(toggleFetchLatestProducts());
       dispatch(fetchGetProducts());
     }
     dispatch(fetchGetProducts());
-  }, [dispatch, shouldFetchLatestData]);
+    dispatch(fetchGetProductCategory(category));
+  }, [dispatch, shouldFetchLatestProducts]);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setCategory(value);
+    dispatch(fetchGetProductCategory(value));
+  };
 
   return (
     <section className="flex flex-col items-center w-full">
+      <div className="p-3">
+        <select
+          name="category"
+          onChange={handleChange}
+          className="rounded-md border-0 py-1.5 px-2 
+        text-gray-900 shadow-sm ring-1 ring-inset cursor-pointer ring-gray-300
+        focus:ring-0.1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6"
+        >
+          <option value="">All Category</option>
+          <option value="Hoodie">Hoodie</option>
+          <option value="T-Shirt">T-Shirt</option>
+          <option value="Bottoms">Bottoms</option>
+          <option value="Jacket">Jacket</option>
+          <option value="Accessories">Accessories</option>
+        </select>
+      </div>
       {products.status === "loading" && (
         <div>
           <CardProductSkeletons />
@@ -33,6 +62,73 @@ export default function ListProducts() {
       <section className="grid grid-cols-1 justify-items-center gap-10 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         {products.status === "success" &&
           products.data.map((product, index) => (
+            <div
+              className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900 ${
+                productsByCategory.data.length > 0 && "hidden"
+              }`}
+              key={index}
+            >
+              <img
+                src={product.image}
+                alt="jacket"
+                className="w-full rounded-lg px-3"
+              />
+              <div>
+                <h2 className="ms-2 text-slate-900 text-base font-bold font-serif uppercase tracking-wide">
+                  {product.title}
+                </h2>
+                <div className="flex flex-row ms-2 items-center">
+                  <div className="text-sm font-normal text-slate-900 font-serif">
+                    Size :
+                  </div>
+                  {product.size &&
+                    product.size.map((val, index) => (
+                      <div key={index + 1}>
+                        <div className="text-sm font-normal text-slate-900 font-serif">
+                          <span className="text-white">-</span>
+                          {val}
+                        </div>
+                      </div>
+                    ))}
+                  {!product.size && (
+                    <div>
+                      <p className="ms-2">-</p>
+                    </div>
+                  )}
+                  {product.size.length === 0 && (
+                    <div>
+                      <p className="ms-2">-</p>
+                    </div>
+                  )}
+                </div>
+                <div className="ms-2 text-sm font-normal text-slate-900 font-serif">
+                  <span>Stock : </span>
+                  {product.amount}
+                </div>
+                <div className="ms-2 text-sm font-normal text-slate-900 font-serif">
+                  <span>Price : $</span>
+                  {product.price}
+                </div>
+              </div>
+              <div className="flex flex-row justify-center content-end items-end my-2 mx-2 gap-2 ">
+                <Link to={`/product/${product.id}`}>
+                  <button className="rounded-md bg-gray-600 px-2 py-1.5 text-sm font-semibold text-white ">
+                    Details
+                  </button>
+                </Link>
+                <Link to={`/edit-product/${product.id}`}>
+                  <button className="rounded-md bg-gray-600 px-2 py-1.5 text-sm font-semibold text-white">
+                    Edit
+                  </button>
+                </Link>
+
+                <ButtonDelete id={product.id} />
+              </div>
+            </div>
+          ))}
+
+        {productsByCategory.data.length > 0 ? (
+          productsByCategory.data.map((product, index) => (
             <div
               className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900`}
               key={index}
@@ -94,7 +190,11 @@ export default function ListProducts() {
                 <ButtonDelete id={product.id} />
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <></>
+        )}
+
         {products.status === "failed" && (
           <div>
             <p>API Calls Failed!</p>

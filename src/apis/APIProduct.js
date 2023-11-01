@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../configs/firebase";
 import { toast } from "react-toastify";
@@ -44,6 +45,25 @@ export const APIProduct = {
     }
   },
 
+  //products by category
+  getProductByCategory: async (category) => {
+    try {
+      const productRef = query(
+        collection(db, "products"),
+        where("category", "==", category)
+      );
+      const result = await getDocs(productRef);
+      const productCategory = result.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      return productCategory;
+    } catch (error) {
+      alert("API calls failed");
+      console.error(error);
+    }
+  },
+
   // create new product
   addProduct: async (product) => {
     try {
@@ -61,7 +81,6 @@ export const APIProduct = {
     try {
       const docRef = doc(db, "products", id);
       await deleteDoc(docRef);
-      toast.warn("Data Deleted Successfuly!");
     } catch (error) {
       alert("error delete document:", error);
       console.error(error);

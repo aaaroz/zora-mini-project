@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { Button, Modal } from "flowbite-react";
-import { AiFillEdit } from "react-icons/ai";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Modal } from "flowbite-react";
 import { useEffect } from "react";
-import { APIOrder } from "../../apis/APIOrder";
 import { useForm } from "react-hook-form";
-import ButtonSubmit from "../auth.page/button.submit";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { toggleFetchLatestData } from "../../store/get.orders.slice";
+import { APIOrder } from "../../apis/APIOrder";
 
 export default function OrderDetail({ id }) {
   const [isOpen, setIsOpen] = useState(false);
   const [stateOrder, setStateOrder] = useState(null);
   const [isSubmited, setIsSubmited] = useState(false);
-  const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { register, setValue, handleSubmit } = useForm();
 
   async function getOrder() {
@@ -43,9 +41,13 @@ export default function OrderDetail({ id }) {
     const orderId = id;
     const newData = { ...stateOrder, status: status };
     APIOrder.updateOrder(orderId, newData).then(() => {
-      navigate(0);
+      dispatch(toggleFetchLatestData());
+      toast.success("Orders Updated Successfully!");
+      setIsOpen(!isOpen);
+      setIsSubmited(false);
     });
   };
+
   useEffect(() => {
     if (isOpen) {
       getOrder();
