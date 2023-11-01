@@ -7,12 +7,12 @@ import {
   selectProducts,
   toggleFetchLatestProducts,
 } from "../../store/get.products.slice";
-import CardProductSkeletons from "./card.product.skeletons";
-import ButtonDelete from "./button.delete";
 import {
   fetchGetProductCategory,
   selectProductsByCategory,
 } from "../../store/get.product.category.slice";
+import CardProductSkeletons from "./card.product.skeletons";
+import ButtonDelete from "./button.delete";
 
 export default function ListProducts() {
   const [category, setCategory] = useState("");
@@ -95,7 +95,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size.length === 0 && (
+                  {product.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
@@ -160,7 +160,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size.length === 0 && (
+                  {product.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
