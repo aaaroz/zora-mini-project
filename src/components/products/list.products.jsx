@@ -56,13 +56,13 @@ export default function ListProducts() {
       </div>
       <section className="grid grid-cols-1 justify-items-center gap-10 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         {products.status === "loading" &&
-          products.data.map(({ title }) => (
+          products?.data?.map(({ title }) => (
             <div key={title}>
               <CardProductSkeleton />
             </div>
           ))}
         {products.status === "success" &&
-          products.data.map((product, index) => (
+          products?.data?.map((product, index) => (
             <div
               className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900 ${
                 productsByCategory?.data?.length > 0 && "hidden"
@@ -83,7 +83,7 @@ export default function ListProducts() {
                     Size :
                   </div>
                   {product.size &&
-                    product.size.map((val, index) => (
+                    product?.size?.map((val, index) => (
                       <div key={index + 1}>
                         <div className="text-sm font-normal text-slate-900 font-serif">
                           <span className="text-white">-</span>
@@ -148,7 +148,7 @@ export default function ListProducts() {
                     Size :
                   </div>
                   {product.size &&
-                    product.size.map((val, index) => (
+                    product?.size?.map((val, index) => (
                       <div key={index + 1}>
                         <div className="text-sm font-normal text-slate-900 font-serif">
                           <span className="text-white">-</span>
