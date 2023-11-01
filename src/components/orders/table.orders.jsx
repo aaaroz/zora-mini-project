@@ -46,7 +46,7 @@ export default function TableOrders() {
           </tr>
         </thead>
         <tbody>
-          {stateOrders.data.map(
+          {stateOrders?.data?.map(
             ({ id, name, email, totalPrice, status }, index) => {
               const isLast = index === stateOrders.length - 1;
               const classes = isLast

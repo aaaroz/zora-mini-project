@@ -18,8 +18,11 @@ export function ProfileCard() {
   }, []);
   return (
     <>
-      {userAdmin &&
-        userAdmin.data.map((user, index) => (
+      {userAdmin.status === "loading" && <p>Loading..</p>}
+      {userAdmin.status === "failed" && <p>Something wrong happend..!</p>}
+
+      {userAdmin.status === "success" &&
+        userAdmin?.data?.map((user, index) => (
           <div
             className="w-52 rounded-xl drop-shadow-md border border-gray-300 bg-white"
             key={index + 1}
