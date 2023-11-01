@@ -127,7 +127,7 @@ export default function ListProducts() {
             </div>
           ))}
 
-        {productsByCategory?.data?.length > 0 ? (
+        {productsByCategory?.status === "success" ? (
           productsByCategory?.data?.map((product, index) => (
             <div
               className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900`}
