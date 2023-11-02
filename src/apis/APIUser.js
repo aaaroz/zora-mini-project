@@ -2,6 +2,7 @@ import {
   collection,
   doc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -9,6 +10,22 @@ import {
 import { db } from "../configs/firebase";
 
 export const APIUser = {
+  // get all users
+  getUsers: async () => {
+    try {
+      const userRef = collection(db, "users");
+      const result = await getDocs(query(userRef, orderBy("createdAt", "asc")));
+      const user = result.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      return user;
+    } catch (error) {
+      alert("API calls failed");
+      console.error(error);
+    }
+  },
+
   // get user auth by id
   getUser: async (id) => {
     try {

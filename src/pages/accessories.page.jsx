@@ -21,7 +21,7 @@ export default function Accessories() {
         <Header />
         <section className="flex flex-col w-full items-center h-auto pb-16">
           <h1 className="pt-14 text-center text-1xl font-bold uppercase hover:border-b-4 border-neutral-900 pb-2 md:text-3xl md:pt-20 ">
-            t-shirt
+            Accessories
           </h1>
           <div className="grid mt-24 grid-cols-1 gap-8 justify-items-center lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 ">
             {productsState &&

@@ -21,7 +21,7 @@ export default function EditProduct() {
       <Sidebar isActive={isActive} />
       <HeaderDashboard />
       <section className="p-4 lg:ml-64">
-        <div className="p-4 border-gray-200 border-dashed rounded-lg border-2">
+        <div className="p-4">
           <FormEditProduct />
         </div>
       </section>

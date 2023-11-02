@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import zoraIcons from "../assets/zora.svg";
-import ButtonSubmit from "../components/auth.page/button.submit";
+import ButtonSubmit, {
+  ButtonSubmitDisable,
+} from "../components/auth.page/button.submit";
 import ReactHelmet from "../components/react.helmet";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { SignupSchema } from "../schema/signup.schema";
-import { APIAuth } from "../apis/APIAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../configs/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 export default function Signup() {
+  const [isSubmited, setIsSubmited] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -20,11 +26,40 @@ export default function Signup() {
     resolver: yupResolver(SignupSchema),
   });
 
-  const onSubmit = (data) => {
-    const name = data.firstName + data.lastName;
-    APIAuth.signUpWithEmailPassword(data.email, data.password, name);
-    toast.success("welcome new admin!, please login to access dashboard!");
-    navigate("/signin");
+  const onSubmit = async (data) => {
+    setIsSubmited(true);
+    try {
+      const email = data.email;
+      const password = data.password;
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const name = data.firstName + data.lastName;
+
+      const user = result.user;
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        name,
+        authProvider: "local",
+        email,
+        image: null,
+        createdAt: serverTimestamp(),
+      });
+      toast.success("Account registered successfully!");
+      navigate("/signin");
+    } catch (err) {
+      if (err.code === "auth/email-already-in-use") {
+        toast.error("email already in used, try another email!");
+      } else if (err.code === "auth/invalid-email") {
+        toast.error("email is not valid!");
+      } else if (err.code === "auth/network-request-failed") {
+        toast.error("network request failed!");
+      }
+      console.error(err);
+      setIsSubmited(false);
+    }
   };
 
   return (
@@ -111,6 +146,7 @@ export default function Signup() {
                 <input
                   id="username"
                   type="text"
+                  autoComplete="username"
                   {...register("username")}
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${
@@ -169,6 +205,7 @@ export default function Signup() {
                 <input
                   id="password"
                   type="password"
+                  autoComplete="new-password"
                   {...register("password")}
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${
@@ -199,6 +236,7 @@ export default function Signup() {
                 <input
                   id="confirmPassword"
                   type="password"
+                  autoComplete="new-confirm-password"
                   {...register("confirmPassword")}
                   className={`block w-full rounded-md py-1.5 ps-2 text-neutral-900 shadow-sm border border-gray-300 focus:border-neutral-900
                   focus:ring-1 focus:outline-none sm:text-sm sm:leading-6 focus:ring-neutral-900 ${
@@ -217,14 +255,18 @@ export default function Signup() {
             </div>
 
             <div>
-              <ButtonSubmit text={"Sign Up"} />
+              {isSubmited ? (
+                <ButtonSubmitDisable text={"Signup in..."} />
+              ) : (
+                <ButtonSubmit text={"Sign Up"} />
+              )}
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Already becomes an admin?{" "}
             <a
-              href="/#"
+              href="/signin"
               className="font-bold leading-6 text-neutral-900 hover:text-neutral-950"
             >
               Sign in to Dashboard

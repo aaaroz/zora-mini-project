@@ -1,60 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import {
   fetchGetProducts,
   selectProducts,
+  toggleFetchLatestProducts,
 } from "../../store/get.products.slice";
-import CardProductSkeletons from "./card.product.skeletons";
-import { Link, useNavigate } from "react-router-dom";
-import { GetProduct } from "../../utils/get.product";
-import { deleteDoc, doc } from "@firebase/firestore";
-import { db, imageDB } from "../../configs/firebase";
-import { deleteObject, ref } from "@firebase/storage";
+import {
+  fetchGetProductCategory,
+  selectProductsByCategory,
+  toggleFetchLatestProductsCategory,
+} from "../../store/get.product.category.slice";
+import ButtonDelete from "./button.delete";
+import CardProductSkeleton from "./card.product.skeleton";
 
 export default function ListProducts() {
-  const [sortByCategory, setSortByCategory] = useState([]);
+  const [category, setCategory] = useState("");
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
-  const navigate = useNavigate();
-
-  // handle delete product
-  const handleDelete = async (id) => {
-    if (window.confirm("Do you want to delete this product?")) {
-      // get product by id
-      const product = await GetProduct(id);
-
-      // get image id for delete product image in storage
-      const imageId = product?.image.split("%2F")[1].split("?")[0];
-      // create image reference
-      const imageRef = ref(imageDB, `productImage/${imageId}`);
-      const docRef = doc(db, "products", id);
-
-      await deleteObject(imageRef);
-      await deleteDoc(docRef);
-      navigate(0);
-    }
-  };
+  const { shouldFetchLatestProducts } = useSelector(selectProducts);
+  const productsByCategory = useSelector(selectProductsByCategory);
+  const { shouldFetchLatestProductsCategory } = useSelector(
+    selectProductsByCategory
+  );
 
   useEffect(() => {
+    if (shouldFetchLatestProducts) {
+      dispatch(toggleFetchLatestProducts());
+      dispatch(fetchGetProducts());
+    } else if (shouldFetchLatestProductsCategory) {
+      dispatch(toggleFetchLatestProductsCategory());
+      dispatch(fetchGetProductCategory(category));
+      dispatch(fetchGetProducts());
+    }
     dispatch(fetchGetProducts());
-  }, [dispatch]);
+    dispatch(fetchGetProductCategory(category));
+  }, [dispatch, shouldFetchLatestProducts, shouldFetchLatestProductsCategory]);
 
-  // handle change on select form to make a sorting by category
   const handleChange = (e) => {
     const value = e.target.value;
-    const res = products.data.filter(({ category }) => category === `${value}`);
-    setSortByCategory(res);
+    setCategory(value);
+    dispatch(fetchGetProductCategory(value));
   };
 
   return (
-    <section className="flex flex-col w-full">
-      <div className="p-3">
+    <section className="flex flex-col items-center w-full">
+      <div className="p-3 ms-16 mb-3 self-start">
         <select
           name="category"
           onChange={handleChange}
-          className="rounded-md border-0 py-1.5 px-2 
-        text-gray-900 shadow-sm ring-1 ring-inset cursor-pointer ring-gray-300
-        focus:ring-0.1 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6"
+          className="rounded-md border-0 py-1.5 px-5
+        text-neutral-900 shadow-sm ring-1 ring-inset cursor-pointer ring-neutral-300
+        focus:ring-0.1 focus:ring-inset focus:ring-neutral-900 sm:text-sm sm:leading-6"
         >
           <option value="">All Category</option>
           <option value="Hoodie">Hoodie</option>
@@ -64,17 +62,18 @@ export default function ListProducts() {
           <option value="Accessories">Accessories</option>
         </select>
       </div>
-      {products.status === "loading" && (
-        <div>
-          <CardProductSkeletons />
-        </div>
-      )}
       <section className="grid grid-cols-1 justify-items-center gap-10 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+        {products.status === "loading" &&
+          products?.data?.map(({ title }) => (
+            <div key={title}>
+              <CardProductSkeleton />
+            </div>
+          ))}
         {products.status === "success" &&
-          products.data.map((product, index) => (
+          products?.data?.map((product, index) => (
             <div
               className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900 ${
-                sortByCategory.length !== 0 && "hidden"
+                productsByCategory?.data?.length > 0 && "hidden"
               }`}
               key={index}
             >
@@ -92,12 +91,9 @@ export default function ListProducts() {
                     Size :
                   </div>
                   {product.size &&
-                    product.size.map((val, index) => (
-                      <div>
-                        <div
-                          className="text-sm font-normal text-slate-900 font-serif"
-                          key={index + 1}
-                        >
+                    product?.size?.map((val, index) => (
+                      <div key={index + 1}>
+                        <div className="text-sm font-normal text-slate-900 font-serif">
                           <span className="text-white">-</span>
                           {val}
                         </div>
@@ -108,7 +104,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size.length === 0 && (
+                  {product?.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
@@ -134,19 +130,16 @@ export default function ListProducts() {
                     Edit
                   </button>
                 </Link>
-                <button
-                  className="rounded-md bg-gray-600 px-2 py-1.5 text-sm font-semibold text-white "
-                  onClick={() => handleDelete(product.id)}
-                >
-                  Delete
-                </button>
+
+                <ButtonDelete id={product.id} />
               </div>
             </div>
           ))}
-        {sortByCategory !== null &&
-          sortByCategory.map((product, index) => (
+
+        {productsByCategory?.status === "success" ? (
+          productsByCategory?.data?.map((product, index) => (
             <div
-              className="w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900"
+              className={`w-52 pt-2 bg-neutral-50 rounded-lg shadow border border-slate-900`}
               key={index}
             >
               <img
@@ -163,12 +156,9 @@ export default function ListProducts() {
                     Size :
                   </div>
                   {product.size &&
-                    product.size.map((val, index) => (
-                      <div>
-                        <div
-                          className="text-sm font-normal text-slate-900 font-serif"
-                          key={index + 1}
-                        >
+                    product?.size?.map((val, index) => (
+                      <div key={index + 1}>
+                        <div className="text-sm font-normal text-slate-900 font-serif">
                           <span className="text-white">-</span>
                           {val}
                         </div>
@@ -179,7 +169,7 @@ export default function ListProducts() {
                       <p className="ms-2">-</p>
                     </div>
                   )}
-                  {product.size.length === 0 && (
+                  {product?.size?.length === 0 && (
                     <div>
                       <p className="ms-2">-</p>
                     </div>
@@ -205,15 +195,15 @@ export default function ListProducts() {
                     Edit
                   </button>
                 </Link>
-                <button
-                  className="rounded-md bg-gray-600 px-2 py-1.5 text-sm font-semibold text-white "
-                  onClick={() => handleDelete(product.id)}
-                >
-                  Delete
-                </button>
+
+                <ButtonDelete id={product.id} />
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <></>
+        )}
+
         {products.status === "failed" && (
           <div>
             <p>API Calls Failed!</p>

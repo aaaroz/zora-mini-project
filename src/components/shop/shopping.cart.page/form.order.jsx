@@ -10,11 +10,13 @@ import { serverTimestamp } from "firebase/firestore";
 import { APIOrder } from "../../../apis/APIOrder";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteCart } from "../../../store/cart.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCart, selectCart } from "../../../store/cart.slice";
 
 export default function FormOrder() {
   const stateTotalPrice = useRecoilValue(price);
+  const { data: products } = useSelector(selectCart);
+
   const navigate = useNavigate(0);
   const dispatch = useDispatch();
 
@@ -27,6 +29,7 @@ export default function FormOrder() {
   const onSubmit = (data) => {
     const newData = {
       ...data,
+      products: products,
       totalPrice: stateTotalPrice,
       status: "ongoing",
       createdAt: serverTimestamp(),

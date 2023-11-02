@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ButtonSubmit from "../auth.page/button.submit";
+import React, { useEffect, useState } from "react";
+import ButtonSubmit, { ButtonSubmitDisable } from "../auth.page/button.submit";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import { uploadPhoto } from "../../utils/upload.photo";
 import { IoPerson } from "react-icons/io5";
 
 export default function FormEditProfile() {
+  const [isSubmited, setIsSubmited] = useState(false);
   const [user, loading] = useAuthState(auth);
   const stateUser = useSelector(selectUser);
   const navigate = useNavigate();
@@ -53,9 +54,9 @@ export default function FormEditProfile() {
   }, [setValue, user]);
 
   const onSubmit = async (user) => {
+    setIsSubmited(true);
     // check if user input a new photo
     if (user.image.length === 1) {
-      // checking, when user have a photo profile before or not
       if (stateUser?.data[0].image === null) {
         // when user didn't have a photo profile before, then get imageURL and then upload new photo profile and update user data
         const imageURL = await uploadPhoto(user.image[0]);
@@ -66,8 +67,7 @@ export default function FormEditProfile() {
           navigate(`/profile/${user.uid}`);
         });
       } else {
-        // when user have a photo profile before
-        // first, get old photo profile url, then deleted old photo profile
+        // get old photo profile url, then deleted old photo profile
         const photo = stateUser.data[0].image.split("%2F")[1].split("?")[0];
         const imageRef = ref(imageDB, `photos/${photo}`);
         await deleteObject(imageRef);
@@ -212,7 +212,11 @@ export default function FormEditProfile() {
           </div>
         </div>
         <div className="m-10">
-          <ButtonSubmit text={"Save"} />
+          {isSubmited ? (
+            <ButtonSubmitDisable text={"Saved!"} />
+          ) : (
+            <ButtonSubmit text={"Save"} />
+          )}
         </div>
       </form>
     </section>

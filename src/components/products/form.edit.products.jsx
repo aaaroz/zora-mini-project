@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ButtonSubmit from "../auth.page/button.submit";
+import React, { useEffect, useState } from "react";
+import ButtonSubmit, { ButtonSubmitDisable } from "../auth.page/button.submit";
 import { APIProduct } from "../../apis/APIProduct";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { uploadProduct } from "../../utils/upload.product";
 
 export default function FormEditProduct() {
+  const [isSubmited, setIsSubmited] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,6 +49,7 @@ export default function FormEditProduct() {
   }, [product, setValue, id]);
 
   const onSubmit = async (data) => {
+    setIsSubmited(true);
     // if user upload a new product image
     if (data.image.length === 1) {
       // get product image id
@@ -345,7 +347,11 @@ export default function FormEditProduct() {
               )}
             </div>
             <div className="mb-2">
-              <ButtonSubmit text={"Edit Product"} />
+              {isSubmited ? (
+                <ButtonSubmitDisable text={"Product Updated"} />
+              ) : (
+                <ButtonSubmit text={"Update Product"} />
+              )}
             </div>
           </form>
         </div>

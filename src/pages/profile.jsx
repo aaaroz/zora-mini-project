@@ -70,7 +70,7 @@ export default function Profile() {
                   {data?.image ? (
                     <div className="w-24 h-[6.3rem] border-2 rounded-md border-neutral-900 bg-neutral-900 ">
                       <img
-                        src={data.image}
+                        src={data?.image}
                         alt="profile"
                         className="w-24 h-24 object-cover object-center rounded-md"
                       />

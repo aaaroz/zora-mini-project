@@ -53,7 +53,7 @@ const products = selector({
     try {
       const productsRef = collection(db, "products");
       const result = await getDocs(
-        query(productsRef, orderBy("id", "asc"), limit(4))
+        query(productsRef, orderBy("createdAt", "asc"), limit(4))
       );
       const products = result.docs.map((doc) => ({
         ...doc.data(),
@@ -199,50 +199,6 @@ const allAccessories = selector({
   },
 });
 
-// get admin auth from firestore database
-const usersAdmin = selector({
-  key: "users-admin",
-  get: async () => {
-    let userAdmin = null;
-    try {
-      const userRef = collection(db, "users");
-      const result = await getDocs(query(userRef, orderBy("createdAt", "asc")));
-      const user = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      userAdmin = user;
-    } catch (error) {
-      alert("API calls failed");
-      console.error(error);
-    }
-    return userAdmin;
-  },
-});
-
-// get all orders data from firestore
-const allOrders = selector({
-  key: "get-order",
-  get: async () => {
-    let allOrders = null;
-    try {
-      const ordersRef = collection(db, "orders");
-      const result = await getDocs(
-        query(ordersRef, orderBy("createdAt", "asc"))
-      );
-      const orders = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      allOrders = orders;
-    } catch (error) {
-      alert("API calls failed");
-      console.error(error);
-    }
-    return allOrders;
-  },
-});
-
 export {
   price,
   navOpen,
@@ -255,9 +211,7 @@ export {
   allJacket,
   allAccessories,
   displayName,
-  usersAdmin,
   userId,
   userData,
   userImage,
-  allOrders,
 };

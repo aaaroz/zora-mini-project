@@ -1,8 +1,4 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, googleProvider } from "../configs/firebase";
 import { authService } from "../configs/auth";
 import {
@@ -24,7 +20,9 @@ export const APIAuth = {
       // store credentials to cookie
       authService.storeCredentialsToCookie({ idToken, refreshToken });
     } catch (err) {
-      console.error(err);
+      if (err.code === "auth/invalid-login-credentials") {
+        toast.error("Your Email or Password is Wrong!");
+      }
       throw new Error(err);
     }
   },
@@ -53,37 +51,11 @@ export const APIAuth = {
         });
       }
     } catch (err) {
-      console.error(err);
-      throw new Error(err);
-    }
-  },
-
-  // register/signup with email and password
-  signUpWithEmailPassword: async (email, password, name) => {
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = result.user;
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email,
-        image: null,
-        createdAt: serverTimestamp(),
-      });
-    } catch (err) {
-      // catch if email already in used
-      if (err.code === "auth/email-already-in-use") {
-        toast.error("email already in used, try another email!");
-        // catch error when email is invalid
-      } else if (err.code === "auth/invalid-email") {
-        toast.error("email is not valid!");
+      if (err.code === "auth/popup-closed-by-user") {
+        toast.error("oAuth invalid, popup closed by user!");
       }
       console.error(err);
+      throw new Error(err);
     }
   },
 };
