@@ -36,7 +36,7 @@ export default function ListProducts() {
     }
     dispatch(fetchGetProducts());
     dispatch(fetchGetProductCategory(category));
-  }, [dispatch, shouldFetchLatestProducts]);
+  }, [dispatch, shouldFetchLatestProducts, shouldFetchLatestProductsCategory]);
 
   const handleChange = (e) => {
     const value = e.target.value;
