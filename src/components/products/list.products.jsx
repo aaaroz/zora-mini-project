@@ -10,6 +10,7 @@ import {
 import {
   fetchGetProductCategory,
   selectProductsByCategory,
+  toggleFetchLatestProductsCategory,
 } from "../../store/get.product.category.slice";
 import ButtonDelete from "./button.delete";
 import CardProductSkeleton from "./card.product.skeleton";
@@ -20,10 +21,17 @@ export default function ListProducts() {
   const products = useSelector(selectProducts);
   const { shouldFetchLatestProducts } = useSelector(selectProducts);
   const productsByCategory = useSelector(selectProductsByCategory);
+  const { shouldFetchLatestProductsCategory } = useSelector(
+    selectProductsByCategory
+  );
 
   useEffect(() => {
     if (shouldFetchLatestProducts) {
       dispatch(toggleFetchLatestProducts());
+      dispatch(fetchGetProducts());
+    } else if (shouldFetchLatestProductsCategory) {
+      dispatch(toggleFetchLatestProductsCategory());
+      dispatch(fetchGetProductCategory(category));
       dispatch(fetchGetProducts());
     }
     dispatch(fetchGetProducts());

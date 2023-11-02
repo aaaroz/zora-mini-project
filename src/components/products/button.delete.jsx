@@ -8,6 +8,7 @@ import { GetProduct } from "../../utils/get.product";
 import { imageDB } from "../../configs/firebase";
 import { toggleFetchLatestProducts } from "../../store/get.products.slice";
 import { APIProduct } from "../../apis/APIProduct";
+import { toggleFetchLatestProductsCategory } from "../../store/get.product.category.slice";
 
 export default function ButtonDelete({ id }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function ButtonDelete({ id }) {
     APIProduct.deleteProduct(id);
 
     dispatch(toggleFetchLatestProducts());
+    dispatch(toggleFetchLatestProductsCategory());
     toast.warn("Product Deleted Successfully!");
   };
 
