@@ -53,7 +53,7 @@ const products = selector({
     try {
       const productsRef = collection(db, "products");
       const result = await getDocs(
-        query(productsRef, orderBy("id", "asc"), limit(4))
+        query(productsRef, orderBy("createdAt", "asc"), limit(4))
       );
       const products = result.docs.map((doc) => ({
         ...doc.data(),
