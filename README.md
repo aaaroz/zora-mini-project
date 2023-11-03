@@ -1,8 +1,45 @@
-# React + Vite
+# Struktur Folder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```
+├───public
+└───src  						
+    ├───apis							
+    ├───assets							
+    ├───components						
+    │   ├───admins						
+    │   ├───auth.page
+    │   ├───chatbot
+    │   ├───dashboard
+    │   ├───orders
+    │   ├───products
+    │   ├───profile
+    │   ├───settings
+    │   └───shop						
+    │       ├───categories.page
+    │       ├───drops.detail
+    │       ├───drops.page
+    │       ├───landing.page
+    │       └───shopping.cart.page
+    ├───configs						
+    ├───data							
+    ├───pages						
+    ├───recoil							
+    ├───routes						
+    ├───schema						
+    ├───services						
+    ├───store							
+    │   ├───cart.slice
+    │   ├───get.orders.slice
+    │   ├───get.product.category.slice
+    │   ├───get.product.slice
+    │   ├───get.products.slice
+    │   ├───get.user.slice
+    │   └───get.users.slice
+    └───utils							
 
-Currently, two official plugins are available:
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Deployment Link 
+[ZORA Ecommerce](https://zora-ecommerce.vercel.app/)
+
+##### Created by Vite + React
