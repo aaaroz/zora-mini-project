@@ -18,6 +18,7 @@ export default function LandingPage() {
         <SummerSale />
         <Categories />
         <About />
+        <section>test</section>
       </main>
       <Footer />
     </>
