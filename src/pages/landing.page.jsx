@@ -19,6 +19,7 @@ export default function LandingPage() {
         <Categories />
         <About />
         <section>Landing Test</section>
+        <section>Auth Test</section>
       </main>
       <Footer />
     </>
